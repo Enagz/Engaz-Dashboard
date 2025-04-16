@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import logo from '../assets/logo/logo.svg';
 import bro from '../assets/login-in/bro.png';
-// import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
 interface LoginFormProps {}
 
