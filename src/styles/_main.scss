@@ -1,0 +1,38 @@
+// Default Styles
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100..700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-style: normal;
+}
+
+$primary_color: #3e97d1;
+$global_bg: #f8f8f8;
+$containers_bg: #ffffff;
+
+$text_header: #fe2525;
+$text_normal: #676767;
+$line-break: #b3b3b3;
+
+// SideNav
+$sidebar_shadow: rgba(62, 151, 209, 0.15);
+
+// BUTTON
+$button: #409edcf0;
+$button_hover: #f2f2f2;
+
+// TABLE
+$table_shadow: rgba(0, 0, 0, 0.25);
+$table_border: #e5e7eb;
+$yellow_color: #ffb300;
+$yellow_hover: #ffb3001f;
+$green_color: #166534;
+$green_hover: #f0fdf4;
+$red_color: #991b1b;
+$red_hover: #fef2f2;
+
+// ERROR
+$error_color: #e31d1c;
