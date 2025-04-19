@@ -6,12 +6,16 @@ import Customers from "./pages/Customers";
 import Employees from "./pages/Employees";
 import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
+import Charts from "./pages/Charts";
+import Tables from "./pages/Tables";
 
 function App() {
   return (
     <Routes>
       {/* Public Route */}
       <Route path="/login" element={<Login />} />
+      <Route path="/charts" element={<Charts />} />
+      <Route path="/tables" element={<Tables />} />
 
       {/* Protected Route */}
       <Route element={<AuthLayout />}>
