@@ -42,7 +42,7 @@ export default function CostStatistics() {
   const chartData = fullData.slice(fullData.length - selectedPeriod);
 
   return (
-    <Card>
+    <Card className="w-full rounded-3xl bg-white p-0 border-none">
       <CardContent>
         <div className="relative w-fit">
           <button

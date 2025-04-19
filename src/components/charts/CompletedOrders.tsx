@@ -26,7 +26,7 @@ export default function CompletedOrders() {
   const totalVisitors = chartData[0].completed + chartData[0].incompleted;
 
   return (
-    <Card className="flex flex-col">
+    <Card className="w-full rounded-3xl bg-white p-0 border-none">
       <CardContent className="flex flex-1 items-center pb-0">
         <ChartContainer
           config={chartConfig}

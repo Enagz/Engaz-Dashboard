@@ -25,7 +25,7 @@ const chartConfig = {
 
 export default function CompletionRate() {
   return (
-    <Card>
+    <Card className="w-full rounded-3xl bg-white p-0 border-none">
       <CardContent>
         <ChartContainer config={chartConfig}>
           <LineChart

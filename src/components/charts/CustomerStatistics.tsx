@@ -40,8 +40,8 @@ export default function CustomerStatistics() {
   };
 
   return (
-    <Card>
-      <CardContent className="flex flex-col md:flex-row items-center justify-between gap-6">
+    <Card className="w-full rounded-3xl bg-white p-0 border-none">
+      <CardContent className="flex flex-col md:flex-row items-center justify-center gap-6">
         {/* Radial Chart */}
         <div className="relative w-72 h-72">
           <svg viewBox="0 0 300 300" className="w-full h-full">

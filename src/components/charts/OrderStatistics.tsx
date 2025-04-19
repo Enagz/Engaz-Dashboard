@@ -50,7 +50,10 @@ export default function OrderStatistics() {
   const id = "pie-interactive";
 
   return (
-    <Card data-chart={id} className="flex flex-col">
+    <Card
+      data-chart={id}
+      className="w-full rounded-3xl bg-white p-0 border-none"
+    >
       <ChartStyle id={id} config={chartConfig} />
       <CardContent className="flex flex-1 justify-center pb-0">
         <ChartContainer
