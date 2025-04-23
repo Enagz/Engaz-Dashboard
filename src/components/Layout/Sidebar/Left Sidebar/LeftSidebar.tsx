@@ -1,173 +1,126 @@
-import React from 'react';
-import { Bell, MessageCircle, Users, ChevronDown } from 'lucide-react';
-import { Notification, Conversation, TopCustomer } from './Types';
-
-interface LeftSidebarProps {
-  notifications: Notification[];
-  conversations: Conversation[];
-  topCustomers: TopCustomer[];
-  unreadCount: number;
-}
+import React, {useState} from 'react';
+import { LeftSidebarProps } from './Types';
+import { CheckCircle, Bell, Clock, User } from 'lucide-react';
 
 const LeftSidebar: React.FC<LeftSidebarProps> = ({
-  notifications,
-  conversations,
-  topCustomers,
-  unreadCount
+  notifications = [
+    { id: 1, type: 'طلب', details: 'تمت مراجعة الطلب #67890 وهو الآن جاهز للتسليم', date: 'الآن', read: true, icon: <CheckCircle size={20} color="#5cb85c" /> },
+    { id: 2, type: 'طلب', details: 'تم استلام طلب #12345 من العميل أحمد العتيبي', date: 'منذ 5 دقائق', read: false, icon: <Bell size={20} color="#007bff" /> },
+    { id: 3, type: 'دعم', details: 'العميل محمد الزهراني يستفسر عن خدمة الترجمة', date: 'منذ 10 دقائق', read: false, icon: <Clock size={20} color="#ffc107" /> },
+  ],
+  conversations = [
+    { id: 1, name: 'فيصل العتيبي', lastMessage: 'مرحباً، متى يكون ملف الترجمة جاهزاً؟', unread: false, avatar: 'https://i.pravatar.cc/30?img=1', time: 'الآن' },
+    { id: 2, name: 'سالم الدوسري', lastMessage: 'هل بدأتم في الترجمة؟', unread: false, avatar: 'https://i.pravatar.cc/30?img=2', time: 'منذ 15 دقيقة' },
+    { id: 3, name: 'عبدالله الشهري', lastMessage: 'تم الدفع، متى الاستلام؟', unread: true, avatar: 'https://i.pravatar.cc/30?img=3', time: 'منذ 30 دقيقة' },
+    { id: 4, name: 'نواف الزهراني', lastMessage: 'كم باقي على الانتهاء؟', unread: false, avatar: 'https://i.pravatar.cc/30?img=4', time: 'منذ ساعة' },
+    { id: 5, name: 'محمد السبيعي', lastMessage: 'أحتاج تعديل بسيط في الملف', unread: false, avatar: 'https://i.pravatar.cc/30?img=5', time: 'منذ ساعة' },
+  ],
+  topCustomers = [
+    { id: 1, name: 'تركي القحطاني', orderCount: 7, avatar: 'https://i.pravatar.cc/30?img=7' },
+    { id: 2, name: 'بدر المطيري', orderCount: 5, avatar: 'https://i.pravatar.cc/30?img=8' },
+    { id: 3, name: 'عبدالعزيز الخالدي', orderCount: 8, avatar: 'https://i.pravatar.cc/30?img=9' },
+    { id: 4, name: 'ماجد الحربي', orderCount: 4, avatar: 'https://i.pravatar.cc/30?img=10' },
+  ],
+  onConversationClick = (conversationId) => {
+    console.log(`تم النقر على المحادثة برقم: ${conversationId}`);
+  },
+  isLoading = false
 }) => {
-  const [expandedSections, setExpandedSections] = React.useState({
-    notifications: true,
-    conversations: true,
-    customers: true
-  });
+  const [activeTab, setActiveTab] = useState("support");
 
-  const toggleSection = (section: keyof typeof expandedSections) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
-  };
+  if (isLoading) {
+    return <div className="loading-state">جاري تحميل البيانات...</div>;
+  }
 
   return (
-    <aside className="left-sidebar" aria-label="Dashboard sidebar">
-      {/* Notifications Section */}
-      <div className="sidebar-section">
-        <div 
-          className="section-header" 
-          onClick={() => toggleSection('notifications')}
-          role="button"
-          aria-expanded={expandedSections.notifications}
-          aria-controls="notifications-section"
-        >
-          <div className="section-title">
-            <Bell size={20} aria-hidden="true" />
-            <h3>
-              Notifications
-              {unreadCount > 0 && (
-                <span className="badge" aria-label={`${unreadCount} unread notifications`}>
-                  {unreadCount}
-                </span>
-              )}
-            </h3>
-          </div>
-          <ChevronDown 
-            size={16} 
-            className={`toggle-icon ${expandedSections.notifications ? 'open' : ''}`}
-            aria-hidden="true"
-          />
+    <aside className="left-sidebar-fixed">
+      {/* Notification Section*/}
+      <div className="sidebar-section notifications-section">
+        <div className="section-header">
+          <button className="view-all-button">مشاهدة الكل <span className="arrow">❯</span></button>
+          <h2>الإشعارات</h2>
         </div>
-        
-        {expandedSections.notifications && (
-          <div id="notifications-section" className="section-content">
-            {notifications.length > 0 ? (
-              notifications.map(notification => (
-                <div 
-                  key={notification.id} 
-                  className={`notification-item ${!notification.read ? 'unread' : ''}`}
-                  aria-current={!notification.read ? 'true' : undefined}
-                >
-                  <h4>{notification.title}</h4>
-                  <p>{notification.message}</p>
-                  <small>{notification.date}</small>
-                </div>
-              ))
-            ) : (
-              <p className="empty-message">No notifications</p>
-            )}
-          </div>
-        )}
+        <ul className="notifications-list">
+          {notifications.map((notification) => (
+            <li key={notification.id} className="notification-item">
+              <div className="notification-icon">{notification.icon}</div>
+              <div className="notification-content">
+                {/* Backend Data */}
+                <h3 className="notification-title">{notification.details}</h3>
+                <span className="notification-date">{notification.date}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      {/* Conversations Section */}
-      <div className="sidebar-section">
-        <div 
-          className="section-header"
-          onClick={() => toggleSection('conversations')}
-          role="button"
-          aria-expanded={expandedSections.conversations}
-          aria-controls="conversations-section"
-        >
-          <div className="section-title">
-            <MessageCircle size={20} aria-hidden="true" />
-            <h3>Conversations</h3>
+      <hr className="divider" />
+      {/* Conversation Section */}
+      <div className="sidebar-section conversations-section">
+        <div className="section-header">
+          <h2 className="conversations-title">المحادثات</h2>
+        </div>  
+          <div className="conversations-tabs">
+            <button
+              className={`tab ${activeTab === "support" ? "active" : ""}`}
+              onClick={() => setActiveTab("support")}
+            >
+              محادثات الدعم
+            </button>
+            <button
+              className={`tab ${activeTab === "orders" ? "active" : ""}`}
+              onClick={() => setActiveTab("orders")}
+            >
+              محادثات الطلبات
+            </button>
           </div>
-          <ChevronDown 
-            size={16} 
-            className={`toggle-icon ${expandedSections.conversations ? 'open' : ''}`}
-            aria-hidden="true"
-          />
+        <div className="conversations-header-secondary">
+          <button className="view-all-button">مشاهدة الكل <span className="arrow">❯</span></button>
+          <h4 className="sub-section-subtitle">آخر المحادثات</h4>
         </div>
-        
-        {expandedSections.conversations && (
-          <div id="conversations-section" className="section-content">
-            {conversations.length > 0 ? (
-              conversations.map(conversation => (
-                <div key={conversation.id} className="conversation-item">
-                  <div className="customer-info">
-                    <div className="avatar" aria-hidden="true">
-                      {conversation.customerName.charAt(0)}
-                    </div>
-                    <div className="details">
-                      <div className="customer-name">{conversation.customerName}</div>
-                      <p className="last-message">{conversation.lastMessage}</p>
-                    </div>
-                  </div>
-                  {conversation.unreadCount > 0 && (
-                    <span className="unread-count" aria-label={`${conversation.unreadCount} unread messages`}>
-                      {conversation.unreadCount}
-                    </span>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p className="empty-message">No conversations</p>
-            )}
-          </div>
-        )}
-      </div>
 
-      {/* Customers Section */}
-      <div className="sidebar-section">
-        <div 
-          className="section-header"
-          onClick={() => toggleSection('customers')}
-          role="button"
-          aria-expanded={expandedSections.customers}
-          aria-controls="customers-section"
-        >
-          <div className="section-title">
-            <Users size={20} aria-hidden="true" />
-            <h3>Top Customers</h3>
-          </div>
-          <ChevronDown 
-            size={16} 
-            className={`toggle-icon ${expandedSections.customers ? 'open' : ''}`}
-            aria-hidden="true"
-          />
+        <ul className="conversation-list">
+          {conversations.map((conversation) => (
+            <li
+              key={conversation.id}
+              onClick={() => onConversationClick(conversation.id)}
+              className={`conversation-item ${conversation.unread ? 'unread' : ''}`}
+            >
+              <div className="conversation-avatar">
+                {conversation.avatar ? <img src={conversation.avatar} alt={conversation.name} className="avatar-image" /> : <User size={24} color="#fff" />}
+              </div>
+              <div className="conversation-content">
+                <div className="conversation-name">{conversation.name}</div>
+                <p className="conversation-last-message">{conversation.lastMessage}</p>
+              </div>
+              <span className="conversation-time">{conversation.time}</span>
+              {conversation.unread && <span className="unread-indicator"></span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <hr className="divider" />
+
+      {/* قسم أبرز العملاء */}
+      <div className="sidebar-section top-customers-section">
+        <div className="section-header">
+          <h2>أبرز العملاء</h2>
         </div>
-        
-        {expandedSections.customers && (
-          <div id="customers-section" className="section-content">
-            {topCustomers.length > 0 ? (
-              topCustomers.map(customer => (
-                <div key={customer.id} className="customer-item">
-                  <div className="customer-info">
-                    <div className="avatar" aria-hidden="true">
-                      {customer.name.charAt(0)}
-                    </div>
-                    <div className="details">
-                      <div className="customer-name">{customer.name}</div>
-                      <small>{customer.totalSpent} SAR</small>
-                    </div>
-                  </div>
-                  <div className="orders-count">{customer.orderCount} orders</div>
+        <ul className="top-customers-list">
+          {topCustomers.map((customer) => (
+            <li key={customer.id} className="top-customer-item">
+              <div className="customer-info">
+                <div className="customer-avatar">
+                  {customer.avatar ? <img src={customer.avatar} alt={customer.name} className="avatar-image" /> : <User size={24} color="#fff" />}
                 </div>
-              ))
-            ) : (
-              <p className="empty-message">No customer data</p>
-            )}
-          </div>
-        )}
+                <div className="customer-details">
+                  <div className="customer-name">{customer.name}</div>
+                  <span className="customer-orders">{customer.orderCount} طلبات</span>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </aside>
   );
