@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100..700&display=swap");
 
 // * {
-//   font-family: "IBM Plex Sans", sans-serif;
-//   font-style: normal;
+//   // font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+//   // font-style: normal;
 // }
 
 $primary_color: #3e97d1;
@@ -12,6 +12,7 @@ $containers_bg: #ffffff;
 $text_header: #1c1c1c;
 $text_normal: #676767;
 $line-break: #b3b3b3;
+$border: #eee;
 
 // SideNav
 $sidebar_shadow: rgba(62, 151, 209, 0.15);
@@ -249,6 +250,122 @@ $error_color: #e31d1c;
   }
 }
 
+.header {
+  background-color: #ffffff;
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.08);
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  direction: rtl;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .greeting-section {
+        text-align: right;
+      }
+
+      .greeting-text {
+        h1 {
+          font-size: 18px;
+          font-weight: 600;
+          color: #1A1A1A;
+          margin: 0;
+          line-height: 24px;
+        }
+
+        p {
+          font-size: 14px;
+          color: #666666;
+          margin: 0;
+          line-height: 20px;
+          font-weight: 400;
+        }
+      }
+    }
+
+    .search-bar {
+      flex: 1;
+      max-width: 400px;
+      margin: 0 16px;
+      position: relative;
+
+      input {
+        width: 100%;
+        padding: 8px 40px 8px 12px;
+        border: 1px solid #E0E0E0;
+        border-radius: 6px;
+        text-align: right;
+        font-size: 14px;
+        background-color: #FAFAFA;
+        transition: all 0.2s;
+
+        &:focus {
+          outline: none;
+          border-color: #4D90FE;
+          background-color: #FFFFFF;
+          box-shadow: 0 0 0 2px rgba(77, 144, 254, 0.2);
+        }
+
+        &::placeholder {
+          color: #999999;
+          opacity: 1;
+        }
+      }
+
+      .search-icon {
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        transform: translateY(-50%);
+        color: #999999;
+        pointer-events: none;
+      }
+    }
+
+    .settings-language {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      button {
+        background: none;
+        border: none;
+        padding: 8px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #F5F5F5;
+        }
+      }
+    }
+  }
+}
 
 .rightSidebar {
   background-color: $primary_color;
@@ -412,118 +529,448 @@ $error_color: #e31d1c;
 
 
 
-.left-sidebar {
-  // ... (ابقاء التنسيقات الأساسية)
 
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    padding: 10px;
-    transition: background-color 0.2s;
+.left-sidebar-fixed {
+  width: 320px;
+  background-color: $containers_bg;
+  padding: 1rem;
+  overflow-y: auto;
+  height: 100%;
+  border-left: 1px solid $border;
 
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
+  .sidebar-section {
+    margin-bottom: 1.5rem;
 
-    .section-title {
+    .section-header {
+      margin-top: 20px;
+      padding: 0 18px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      margin-bottom: 1rem;
 
-      h3 {
+      h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: $text_header;
         margin: 0;
+      }
+    }
+
+    &.notifications-section {
+      padding: 15px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+      .notification-item {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #eee;
+        border-radius: 8px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .notification-icon {
+          flex-shrink: 0;
+        }
+
+        .notification-content {
+          flex-grow: 1;
+          text-align: right;
+
+          .notification-title {
+            color: $text_header;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+          }
+
+          .notification-details {
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 0.1rem;
+          }
+
+          .notification-date {
+            font-size: 0.7rem;
+            color: $text_normal;
+          }
+        }
+      }
+    }
+
+    &.conversations-section {
+      text-align: right;
+      padding: 15px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+      .section-header.conversations-title-container {
+        color: $text_header;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .conversations-title {
+          font-size: 24px;
+          font-weight: 700;
+          width: 100%;
+          color: $text_header;
+          margin: 0;
+        }
+      }
+
+      .conversations-tabs {
+        display: flex;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+        justify-content: flex-end;
+        border-radius: 16px;
+        overflow: hidden;
+        background-color: $button_hover;
+        padding: 8px;
+
+        .tab {
+          background-color: transparent;
+          color: $text_header;
+          z-index: 1;
+          flex-grow: 1;
+          text-align: center;
+          border: none;
+          padding: 0.6rem 1rem;
+          cursor: pointer;
+          font-size: 0.8rem;
+          font-weight: 500;
+          margin-right: 2px;
+          border-radius: 14px;
+          transition: background-color 0.3s ease, color 0.3s ease;
+
+          &:last-child {
+            margin-right: 0;
+          }
+
+          &.active {
+            background-color: $button;
+            color: $global_bg;
+          }
+        }
+      }
+
+      .conversation-item {
         display: flex;
         align-items: center;
-        gap: 8px;
-      }
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #eee;
+        flex-direction: row-reverse;
+        gap: 10px;
+        cursor: pointer;
 
-      .badge {
-        background-color: #e74c3c;
-        color: white;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .conversation-avatar {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          overflow: hidden;
+          margin-left: 0.75rem;
+          background-color: $global_bg;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0.8rem;
+          color: $containers_bg;
+        }
+
+        .avatar-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .conversation-content {
+          flex-grow: 1;
+
+          .conversation-name {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 0.1rem;
+          }
+
+          .conversation-last-message {
+            font-size: 0.8rem;
+            color: $text_normal;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+
+        .conversation-time {
+          font-size: 0.7rem;
+          color: $text_normal;
+          margin-right: 0.75rem;
+        }
+
+        .unread-indicator {
+          width: 8px;
+          height: 8px;
+          background-color: #ffc107;
+          border-radius: 50%;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+
+    &.top-customers-section {
+      .section-header {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
+        justify-content: flex-start;
+        direction: rtl;
+
+        h2 {
+          font-size: 1.1rem;
+          margin-right: 0;
+          margin-left: auto;
+        }
+      }
+
+      .top-customers-list {
+        .top-customer-item {
+          padding: 0.5rem 0;
+          border-bottom: 1px solid #eee;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .customer-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-direction: row-reverse; /* لترتيب الأفاتار على اليمين */
+
+            .customer-avatar {
+              width: 24px;
+              height: 24px;
+              border-radius: 50%;
+              overflow: hidden;
+              background-color: #ccc;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: white;
+              font-size: 0.7rem;
+              flex-shrink: 0;
+            }
+
+            .avatar-image {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+            .customer-details {
+              text-align: right;
+
+              .customer-name {
+                font-size: 0.9rem;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 0.1rem;
+              }
+
+              .customer-orders {
+                font-size: 0.8rem;
+                color: $text_normal;
+              }
+            }
+          }
+        }
       }
     }
-
-    .toggle-icon {
-      transition: transform 0.3s ease;
-      
-      &.open {
-        transform: rotate(180deg);
-      }
-    }
   }
 
-  .section-content {
-    margin-top: 5px;
+  .view-all-button {
+    background: none;
+    border: none;
+    color: $primary_color;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-size: 12px;
   }
 
-  .notification-item {
-    &.unread {
-      border-right: 3px solid #3E97D1;
-    }
+  .no-data-message {
+    font-size: 0.875rem;
+    color: $text_normal;
+    padding: 0.5rem 0;
+    text-align: center;
   }
 
-  .conversation-item, .customer-item {
+  .divider {
+    border-top: 1px solid #eee;
+    margin: 1rem 0;
+  }
+
+  .loading-state {
+    padding: 1rem;
+    text-align: center;
+    color: $text_normal;
+  }
+}
+
+
+
+
+
+
+
+
+
+.home-container {
+  background-color: $global_bg;
+  min-height: 100vh;
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  direction: rtl;
+
+  .home-content {
+    max-width: 1200vh; 
+    width: 100%; 
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
+    flex-direction: column;
+    gap: 20px;
 
-    .customer-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .overview-card {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: none; 
+      padding: 35px;
 
-      .avatar {
-        width: 30px;
-        height: 30px;
-        background-color: #3E97D1;
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      .card-title {
+        font-size: 1.5rem; 
         font-weight: bold;
+        margin-bottom: 15px;
       }
 
-      .details {
-        .customer-name {
-          font-weight: bold;
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .manager-dashboard {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          .summary-cards-section {
+            margin-bottom: 20px; 
+          }
+
+          .latest-orders-section {
+            width: 100%;
+
+            .latest-orders-card {
+              width: 100%;
+              border-radius: 10px;
+              display: flex;
+              flex-direction: column;
+
+              
+              .section-head {
+                padding: 15px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .section-title {
+                  font-size: 1.2rem;
+                  font-weight: bold;
+                }
+
+                .view-all-button {
+                  background: none;
+                  border: none;
+                  color: #3366FF;
+                  cursor: pointer;
+                  font-size: 0.9rem;
+                  text-decoration: underline;
+                  text-decoration: none;
+                  display: flex; 
+                  align-items: center;
+
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                }
+              }
+            }
+          }
+
+
+          .balance-history-section {
+            .balance-history-card {
+              border-radius: 10px;
+              box-shadow: none; 
+
+              .section-head {
+                padding: 15px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .section-title {
+                  font-size: 1.2rem;
+                  font-weight: bold;
+                }
+
+                .view-all-button {
+                  background: none;
+                  border: none;
+                  color: #3366FF;
+                  cursor: pointer;
+                  font-size: 0.9rem;
+                  text-decoration: underline;
+                  text-decoration: none;
+                  display: flex; 
+                  align-items: center;
+
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                }
+              }
+
+              .card-content {
+                height: 300px;
+              }
+            }
+          }
         }
 
-        .last-message, small {
-          color: rgba(255, 255, 255, 0.7);
-          font-size: 13px;
+        .employee-dashboard {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+
+          .card-title { /* إعادة تعريف عنوان البطاقة لواجهة الموظف إذا لزم الأمر */
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+          }
+
+          .chart-container {
+            height: 300px;
+          }
         }
       }
-    }
-
-    .unread-count {
-      background-color: #3E97D1;
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    }
-
-    .orders-count {
-      background-color: rgba(62, 151, 209, 0.2);
-      color: #3E97D1;
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 12px;
     }
   }
 }
