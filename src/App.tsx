@@ -8,6 +8,8 @@ import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 import Charts from "./pages/Charts";
 import Tables from "./pages/Tables";
+import DashboardLayout from './components/Layout/DashboardLayout/DashboardLayout';
+
 
 function App() {
   return (
@@ -18,12 +20,14 @@ function App() {
       <Route path="/tables" element={<Tables />} />
 
       {/* Protected Route */}
+      <Route element={<DashboardLayout />}>
       <Route element={<AuthLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/customers" element={<Customers />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/privacy" element={<Privacy />} />
       </Route>
+    </Route>
 
       {/* Fallback */}
       <Route path="*" element={<NotFound />} />
