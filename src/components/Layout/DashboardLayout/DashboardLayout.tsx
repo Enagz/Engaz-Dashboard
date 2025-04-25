@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import RightSidebar from '../Sidebar/RightSidebar/RightSidebar'; 
-import LeftSidebar from '../Sidebar/Left Sidebar/LeftSidebar'; 
-import Header from '../Header/Header'; 
+import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
+import RightSidebar from "../Sidebar/RightSidebar/RightSidebar";
+// import LeftSidebar from "../Sidebar/Left Sidebar/LeftSidebar";
+import Header from "../Header/Header";
+import { Menu } from "lucide-react";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
 }
 
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({children}) => {
+const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -16,30 +17,35 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({children}) => {
   };
 
   return (
-    <div className="dashboard-layout flex">
+    <div className="dashboard-layout flex ">
       {/* <LeftSidebar /> */}
 
       <div className="flex-1 flex flex-col">
-        {/* <Header /> */}
+        <button className="md:hidden p-4" onClick={toggleSidebar}>
+          <Menu />
+        </button>
+        <Header />
 
         <div className="main-content">
-          {children || <Outlet />}
+          <Outlet />
         </div>
       </div>
 
-      {/* <RightSidebar
-        isOpen={isSidebarOpen}
-        onClose={toggleSidebar}
-      >
-        {null}
-      </RightSidebar> */}
+      {/* Sidebar for desktop */}
+      <div className="hidden md:block w-64">
+        <RightSidebar isOpen={true} onClose={toggleSidebar} />
+      </div>
+
+      {/* Sidebar for mobile */}
+      <div className="md:hidden">
+        {isSidebarOpen && (
+          <div className="absolute z-50 w-64 h-full shadow-lg">
+            <RightSidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default DashboardLayout;
-
-
-
-
-
