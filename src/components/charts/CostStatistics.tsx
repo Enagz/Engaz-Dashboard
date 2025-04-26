@@ -42,8 +42,8 @@ export default function CostStatistics() {
   const chartData = fullData.slice(fullData.length - selectedPeriod);
 
   return (
-    <Card className="w-full rounded-3xl bg-white p-0 border-none">
-      <CardContent>
+    <Card className="w-full rounded-3xl bg-white p-0 py-8 border-none ">
+      <CardContent className="flex flex-col">
         <div className="relative w-fit">
           <button
             className="mb-2 flex items-center gap-1 text-sm text-gray-500 border border-gray-200 rounded-md px-3 py-1.5 hover:bg-gray-50"
@@ -87,7 +87,7 @@ export default function CostStatistics() {
             </div>
           )}
         </div>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer className="max-h-[410px] grow" config={chartConfig}>
           <LineChart
             accessibilityLayer
             data={chartData}
