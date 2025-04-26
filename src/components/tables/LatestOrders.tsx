@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
-import { Trash2, Download, Edit2 } from "lucide-react";
+import { Icons } from "./Icons";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -72,13 +72,13 @@ const ActionsCellRenderer = () => {
   return (
     <div className="h-full flex gap-2 justify-center items-center">
       <button className="bg-none border-none cursor-pointer">
-        <Trash2 size={18} color="#FF3333" />
+        <Icons.trash />
       </button>
       <button className="bg-none border-none cursor-pointer">
-        <Download size={18} color="#3366FF" />
+        <Icons.download />
       </button>
       <button className="bg-none border-none cursor-pointer">
-        <Edit2 size={18} color="#4BB543" />
+        <Icons.edit />
       </button>
     </div>
   );
