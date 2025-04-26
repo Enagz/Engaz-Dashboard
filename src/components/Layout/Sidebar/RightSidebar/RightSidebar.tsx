@@ -1,4 +1,12 @@
-import { Home, Users, User, ShoppingCart, Coins, Settings } from "lucide-react";
+import {
+  Home,
+  Users,
+  User,
+  ShoppingCart,
+  Coins,
+  Settings,
+  LogOut,
+} from "lucide-react";
 import logo from "@/assets/logo/logolight.svg";
 import { Link } from "react-router";
 import { useLocation } from "react-router";
@@ -16,12 +24,12 @@ const RightSidebar = () => {
   ];
   return (
     <aside className="bg-primary-color h-full w-full">
-      <div className="flex flex-col py-8">
+      <div className="h-full flex flex-col py-8 gap-y-4">
         <div className="flex justify-center">
           <img src={logo} alt="Enjaz" className="logo" />
         </div>
 
-        <nav className="mt-24">
+        <nav className="mt-12 py-8 overflow-y-auto">
           <ul className="px-3.5 md:pl-3.5 md:pr-0 rtl:md:pr-3.5 rtl:md:pl-0 font-medium text-xl text-white">
             {menuItems.map((item) => {
               const isActive = location.pathname === item.path;
@@ -30,7 +38,7 @@ const RightSidebar = () => {
                   key={item.path}
                   className={`relative hover:bg-white md:hover:bg-transparent hover:text-primary-color md:hover:text-white hover:bg-gradient-to-r rtl:hover:bg-gradient-to-l md:from-white md:to-[75%] md:to-transparent hover:rounded-full md:hover:rounded-l-full md:hover:rounded-r-none rtl:md:hover:rounded-r-full rtl:md:hover:rounded-l-none ${
                     isActive
-                      ? "md:hover:bg-white md:hover:text-primary-color bg-white text-primary-color rounded-full md:rounded-l-full text-[1.375rem] font-bold"
+                      ? "md:hover:bg-white md:hover:!text-primary-color bg-white text-primary-color rounded-full md:rounded-l-full text-[1.375rem] font-bold"
                       : ""
                   }`}
                 >
@@ -56,6 +64,14 @@ const RightSidebar = () => {
             })}
           </ul>
         </nav>
+
+        <Link
+          to="#"
+          className="mt-auto mb-8 flex items-center justify-center gap-4 text-error-color"
+        >
+          <LogOut className="rotate-180 rtl:rotate-0" />
+          <span>خروح</span>
+        </Link>
       </div>
     </aside>
   );
