@@ -1,7 +1,16 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme inline {
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100..700&display=swap");
+
+@layer base {
+  html {
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+}
+
+:root {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -65,9 +74,7 @@
 
   /* ERROR */
   --color-error-color: #e31d1c;
-}
 
-:root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.106 0.176 287.8);
