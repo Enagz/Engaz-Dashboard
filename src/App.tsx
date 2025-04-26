@@ -10,6 +10,7 @@ import Charts from "./pages/Charts";
 import Tables from "./pages/Tables";
 import DashboardLayout from "./components/Layout/DashboardLayout/DashboardLayout";
 import EmployeeProfile from "./pages/EmployeeProfile";
+import Costs from "./pages/Costs";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/customers" element={<Customers />} />
           <Route path="/employees" element={<Employees />} />
           <Route path="/employees/:id" element={<EmployeeProfile />} />
+          <Route path="/costs" element={<Costs />} />
           <Route path="/privacy" element={<Privacy />} />
         </Route>
       </Route>
