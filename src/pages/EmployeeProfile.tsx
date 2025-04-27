@@ -3,7 +3,7 @@ import CompletedOrders from "@/components/charts/CompletedOrders";
 import CompletionRate from "@/components/charts/CompletionRate";
 import CompletionTime from "@/components/charts/CompletionTime";
 import CustomersRate from "@/components/charts/CustomersRate";
-import Input from "@/components/forms/input";
+import Input from "@/components/forms/Input";
 import Tasks from "@/components/tables/Tasks";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { User } from "lucide-react";
