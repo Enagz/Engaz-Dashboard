@@ -2,7 +2,8 @@ import { Routes, Route } from "react-router";
 import AuthLayout from "./Providers/AuthLayout";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import Customers from "./pages/Customers";
+import Customers from "./pages/customers-pages/Customers";
+import CustomerDetailsPage from './pages/customers-pages/CustomerDetailsPage';
 import Employees from "./pages/Employees";
 import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
@@ -24,6 +25,7 @@ function App() {
       <Route element={<AuthLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/customers" element={<Customers />} />
+        <Route path="/customers/:id" element={<CustomerDetailsPage />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/privacy" element={<Privacy />} />
       </Route>

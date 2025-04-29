@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
-import { Trash2, Edit2, Download } from "lucide-react";
+import { Trash2, Edit2, Download, Sliders } from "lucide-react";
+import { Link } from 'react-router-dom';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -20,12 +21,15 @@ interface ClientData {
 
 // Custom cell renderer for client name and email
 const ClientCellRenderer = (props: any) => {
-  const { name, email } = props.data;
+  const { id, name } = props.data;
 
   return (
     <div dir="rtl" className="flex flex-col items-end">
-      <div className="font-bold text-sm">{name}</div>
-      <div className="text-gray-500 text-xs">{email}</div>
+      {/* <div className="font-bold text-sm">{name}</div> */}
+      <Link to={`/customers/${id}`} className="font-bold text-sm hover:underline">
+        {name}
+      </Link>
+      <div className="text-gray-500 text-xs">{props.data.email}</div>
     </div>
   );
 };
@@ -268,7 +272,13 @@ const CustomerDetails: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col">      
+    
+      <div className="flex items-center justify-between" style={{ backgroundColor: 'white', padding: '10px', borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}> {/* إضافة نمط الخلفية */}
+        <h2 className="text-xl font-bold text-[#333]">كل العملاء</h2>
+        <Sliders size={24} color="#888" />
+      </div>
+
       <div
         className="ag-theme-alpine"
         style={{
@@ -294,3 +304,16 @@ const CustomerDetails: React.FC = () => {
 };
 
 export default CustomerDetails;
+
+
+
+
+
+
+
+
+
+
+
+
+
