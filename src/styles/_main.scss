@@ -974,3 +974,247 @@ $error_color: #e31d1c;
     }
   }
 }
+
+
+
+
+.customers-container {
+  background-color: #F4F5F7;
+  padding: 24px;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  align-items: stretch;
+
+  .button-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 24px;
+
+    .pageTitle {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: $text_header;
+      align-self: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .addCustomerButton {
+      background-color: $primary_color;
+      color: $global_bg;
+      align-self: flex-end;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+
+      &:hover {
+        background-color: #317eb896;
+      }
+    }
+  }
+
+  .statisticsContainer {
+    margin-bottom: 32px;
+    width: 100%;
+  }
+
+  .detailsContainer {
+    margin-bottom: 24px;
+    width: 100%;
+
+    .sectionTitle {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: $text_header;
+      margin-bottom: 16px;
+    }
+  }
+
+  .bestCustomersContainer {
+    width: 100%;
+
+    .sectionTitle {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: $text_header;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.customerDetailsPageContainer {
+  display: grid;
+    grid-template-columns: 1fr 400px ; /* Adjust the width of the customer info card as needed */
+    gap: 20px;
+    padding: 20px;
+    direction: rtl; 
+}
+
+.customerInfoCard,
+.ordersChartCard,
+.ordersLogCard {
+    background-color: white;
+    border-radius: 8px;
+    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.customerInfoCard {
+  background-color: white;
+  border-radius: 8px;
+  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.editButton, .deleteButton {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.editButton,
+.deleteButton {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+}
+
+.editButton {
+    background-color: #3498db;
+    color: white;
+}
+
+.deleteButton {
+    background-color: #e74c3c;
+    color: white;
+}
+
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.infoColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formItem {
+  display: flex;
+  flex-direction: column; /* Arrange label and input vertically */
+}
+
+.infoLabel {
+  font-weight: 500;
+  color: $text_header;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid #B3B3B333;
+  background-color: #F8F8F8;
+  overflow: hidden;
+}
+
+.formIcon {
+  background-color: $primary_color;
+  color: white;
+  width: 35px;
+  padding: 6px; 
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper input[type="text"],
+.wrapper input[type="email"] {
+  height: 50px;
+  flex: 1;
+  padding: 0 12px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  color: #333;
+}
+
+.wrapper input::placeholder {
+  color: #aaa;
+}
+
+.ordersChartCard {
+  /* Adjust placement if needed */
+}
+
+.chartPlaceholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+}
+
+.ordersLogCard {
+  grid-column: 1 / -1;
+}
+
+.ordersTablePlaceholder {
+  /* Style table placeholder if needed */
+}
