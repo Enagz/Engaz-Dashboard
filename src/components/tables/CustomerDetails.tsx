@@ -304,16 +304,3 @@ const CustomerDetails: React.FC = () => {
 };
 
 export default CustomerDetails;
-
-
-
-
-
-
-
-
-
-
-
-
-

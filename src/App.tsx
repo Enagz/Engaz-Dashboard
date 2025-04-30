@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import Charts from "./pages/Charts";
 import Tables from "./pages/Tables";
 import DashboardLayout from './components/Layout/DashboardLayout/DashboardLayout';
+import AddCustomer from './pages/customers-pages/AddCustomer'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       <Route element={<AuthLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/customers" element={<Customers />} />
+        <Route path="/add-customer" element={<AddCustomer />} />
         <Route path="/customers/:id" element={<CustomerDetailsPage />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/privacy" element={<Privacy />} />

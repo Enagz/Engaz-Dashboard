@@ -197,7 +197,7 @@ const OrderHistory: React.FC = () => {
     return (
         <div className="flex flex-col">
 
-            <div className="flex items-center justify-between" style={{ backgroundColor: 'white', padding: '10px', borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}> {/* إضافة نمط الخلفية */}
+            <div className="flex items-center justify-between" style={{ backgroundColor: 'white', padding: '10px', borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}> 
                 <h2 className="text-xl font-bold text-[#333]">كل الطلبات</h2>
                 <Sliders size={24} color="#888" />
             </div>
