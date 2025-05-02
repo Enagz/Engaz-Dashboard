@@ -8,7 +8,7 @@ import {
   Sidebar,
   SidebarProvider,
   SidebarTrigger,
-} from "../../../components/ui/sidebar";
+} from "@/components/ui/sidebar";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
@@ -17,9 +17,9 @@ interface DashboardLayoutProps {
 const DashboardLayout: React.FC<DashboardLayoutProps> = () => {
   return (
     <SidebarProvider>
-     {/* <Sidebar >
+      <Sidebar side="left">
         <RightSidebar />
-      </Sidebar> */}
+      </Sidebar>
 
       <div className="grow flex flex-col">
         <SidebarTrigger className="md:hidden" />

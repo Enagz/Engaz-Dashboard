@@ -11,7 +11,8 @@ import Charts from "./pages/Charts";
 import Tables from "./pages/Tables";
 import DashboardLayout from './components/Layout/DashboardLayout/DashboardLayout';
 import AddCustomer from './pages/customers-pages/AddCustomer'
-
+import EmployeeProfile from "./pages/EmployeeProfile";
+import Costs from "./pages/Costs";
 
 function App() {
   return (
@@ -23,15 +24,17 @@ function App() {
 
       {/* Protected Route */}
       <Route element={<DashboardLayout />}>
-      <Route element={<AuthLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/customers" element={<Customers />} />
-        <Route path="/add-customer" element={<AddCustomer />} />
-        <Route path="/customers/:id" element={<CustomerDetailsPage />} />
-        <Route path="/employees" element={<Employees />} />
-        <Route path="/privacy" element={<Privacy />} />
+        <Route element={<AuthLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/customers" element={<Customers />} />
+          <Route path="/add-customer" element={<AddCustomer />} />
+          <Route path="/customers/:id" element={<CustomerDetailsPage />} />
+          <Route path="/employees" element={<Employees />} />
+          <Route path="/employees/:id" element={<EmployeeProfile />} />
+          <Route path="/costs" element={<Costs />} />
+          <Route path="/privacy" element={<Privacy />} />
+        </Route>
       </Route>
-    </Route>
 
       {/* Fallback */}
       <Route path="*" element={<NotFound />} />

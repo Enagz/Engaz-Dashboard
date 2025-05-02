@@ -7,65 +7,14 @@ import { Icons } from "./Icons";
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 interface RowData {
-  requestId: string;
-  client: string;
-  service: string;
-  status: "completed" | "rejected" | "inProgress";
-  date: string;
-  employee: string;
+  serviceNumber: number;
+  serviceType: string;
+  tasksNumber: number;
+  serviceCost: string;
+  totalCost: string;
+  completionDate: string;
+  billingState: string;
 }
-
-// Custom cell renderer for status column
-const StatusCellRenderer = (props: any) => {
-  const status = props.value;
-  let color = "";
-  let background = "";
-  let text = "";
-  let icon = "•";
-
-  if (status === "completed") {
-    color = "var(--color-green-color)";
-    background = "var(--color-green-hover)";
-    text = "مكتمل";
-  } else if (status === "rejected") {
-    color = "var(--color-red-color)";
-    background = "var(--color-red-hover)";
-    text = "مرفوض";
-  } else if (status === "inProgress") {
-    color = "var(--color-yellow-color)";
-    background = "var(--color-yellow-hover)";
-    text = "قيد المعالجة";
-  }
-
-  return (
-    <div dir="rtl" className="flex h-full items-center justify-center">
-      <div
-        className="font-bold flex items-center gap-1 px-2 py-3 h-0 rounded-full"
-        style={{ background, color: color }}
-      >
-        <span className="text-lg mr-1">{icon}</span>
-        {text}
-      </div>
-    </div>
-  );
-};
-
-// Custom cell renderer for employee column with avatar
-const EmployeeCellRenderer = (props: any) => {
-  const employee = props.data.employee;
-
-  return (
-    <div dir="rtl" className="flex items-center font-bold">
-      <div
-        className="text-white size-8 rounded-full flex items-center justify-center ml-2.5"
-        style={{
-          backgroundColor: "var(--color-primary-color)",
-        }}
-      ></div>
-      {employee}
-    </div>
-  );
-};
 
 // Custom cell renderer for action buttons
 const ActionsCellRenderer = () => {
@@ -84,46 +33,32 @@ const ActionsCellRenderer = () => {
   );
 };
 
-const LatestOrders: React.FC = () => {
+const ServicesCosts: React.FC = () => {
   const [rowData] = useState<RowData[]>([
     {
-      requestId: "#12567",
-      client: "فهد القحطاني",
-      service: "طباعة PDF",
-      status: "completed",
-      date: "قبل 10 دقائق",
-      employee: "سعود الحربي",
+      serviceNumber: 201,
+      serviceType: "ترجمة",
+      tasksNumber: 75,
+      serviceCost: "150 ر.س",
+      totalCost: "11,250 ر.س",
+      completionDate: "2025-03-29",
+      billingState: "مدفوع",
     },
     {
-      requestId: "#12567",
-      client: "عبدالله المطيري",
-      service: "ترجمة إنجليزي",
-      status: "rejected",
-      date: "قبل ساعة",
-      employee: "فهد الدوسري",
-    },
-    {
-      requestId: "#12567",
-      client: "نايف العتيبي",
-      service: "طباعة PDF",
-      status: "completed",
-      date: "قبل 3 ساعات",
-      employee: "خالد القامدي",
-    },
-    {
-      requestId: "#12567",
-      client: "سالم الدوسري",
-      service: "ترجمة فرنسي",
-      status: "inProgress",
-      date: "قبل 5 ساعات",
-      employee: "تركي الشمري",
+      serviceNumber: 202,
+      serviceType: "طباعة",
+      tasksNumber: 52,
+      serviceCost: "100 ر.س",
+      totalCost: "5,200 ر.س",
+      completionDate: "2025-03-28",
+      billingState: "غير مدفوع",
     },
   ]);
 
   const [columnDefs] = useState<ColDef[]>([
     {
-      headerName: "رقم الطلب",
-      field: "requestId",
+      headerName: "رقم الخدمة",
+      field: "serviceNumber",
       minWidth: 100,
       cellStyle: {
         textAlign: "center",
@@ -139,8 +74,8 @@ const LatestOrders: React.FC = () => {
       },
     },
     {
-      headerName: "العميل",
-      field: "client",
+      headerName: "نوع الخدمة",
+      field: "serviceType",
       minWidth: 100,
       cellStyle: {
         textAlign: "center",
@@ -156,8 +91,8 @@ const LatestOrders: React.FC = () => {
       },
     },
     {
-      headerName: "الخدمة",
-      field: "service",
+      headerName: "عدد المهام الشهرية",
+      field: "tasksNumber",
       minWidth: 100,
       cellStyle: {
         textAlign: "center",
@@ -173,26 +108,9 @@ const LatestOrders: React.FC = () => {
       },
     },
     {
-      headerName: "الحالة",
-      field: "status",
-      minWidth: 100,
-      cellRenderer: StatusCellRenderer,
-      cellStyle: {
-        fontSize: ".75rem",
-        textAlign: "center",
-        fontWeight: "600",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "التاريخ",
-      field: "date",
-      minWidth: 100,
+      headerName: "تكلفة المهمة",
+      field: "serviceCost",
+      minWidth: 120,
       cellStyle: {
         textAlign: "center",
         color: "var(--color-text-normal)",
@@ -207,14 +125,47 @@ const LatestOrders: React.FC = () => {
       },
     },
     {
-      headerName: "الموظف",
-      field: "employee",
+      headerName: "التكلفة الكلية",
+      field: "totalCost",
       minWidth: 140,
-      cellRenderer: EmployeeCellRenderer,
       cellStyle: {
         textAlign: "center",
+        color: "var(--color-text-normal)",
+        fontWeight: "500",
+        fontSize: ".875rem",
+      },
+      headerStyle: {
+        fontSize: ".75rem",
+        fontWeight: 600,
+        backgroundColor: "var(--color-table-border)",
         color: "#000",
-        fontWeight: "600",
+      },
+    },
+    {
+      headerName: "تاريخ الإنجاز",
+      field: "completionDate",
+      minWidth: 100,
+      cellStyle: {
+        textAlign: "center",
+        color: "var(--color-text-normal)",
+        fontWeight: "500",
+        fontSize: ".875rem",
+      },
+      headerStyle: {
+        fontSize: ".75rem",
+        fontWeight: 600,
+        backgroundColor: "var(--color-table-border)",
+        color: "#000",
+      },
+    },
+    {
+      headerName: "حالة الدفع",
+      field: "billingState",
+      minWidth: 100,
+      cellStyle: {
+        textAlign: "center",
+        color: "var(--color-text-normal)",
+        fontWeight: "500",
         fontSize: ".875rem",
       },
       headerStyle: {
@@ -274,4 +225,4 @@ const LatestOrders: React.FC = () => {
   );
 };
 
-export default LatestOrders;
+export default ServicesCosts;

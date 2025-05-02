@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
-import { Icons } from "./Icons";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 interface RowData {
-  requestId: string;
+  taskNumber: string;
   client: string;
-  service: string;
-  status: "completed" | "rejected" | "inProgress";
-  date: string;
-  employee: string;
+  task: string;
+  language: string;
+  method: string;
+  status: "completed" | "inProgress";
+  startDate: string;
+  deliveryDate: string;
+  comments: string;
 }
 
 // Custom cell renderer for status column
@@ -26,11 +28,7 @@ const StatusCellRenderer = (props: any) => {
   if (status === "completed") {
     color = "var(--color-green-color)";
     background = "var(--color-green-hover)";
-    text = "مكتمل";
-  } else if (status === "rejected") {
-    color = "var(--color-red-color)";
-    background = "var(--color-red-hover)";
-    text = "مرفوض";
+    text = "مكتملة";
   } else if (status === "inProgress") {
     color = "var(--color-yellow-color)";
     background = "var(--color-yellow-hover)";
@@ -50,80 +48,47 @@ const StatusCellRenderer = (props: any) => {
   );
 };
 
-// Custom cell renderer for employee column with avatar
-const EmployeeCellRenderer = (props: any) => {
-  const employee = props.data.employee;
-
-  return (
-    <div dir="rtl" className="flex items-center font-bold">
-      <div
-        className="text-white size-8 rounded-full flex items-center justify-center ml-2.5"
-        style={{
-          backgroundColor: "var(--color-primary-color)",
-        }}
-      ></div>
-      {employee}
-    </div>
-  );
-};
-
-// Custom cell renderer for action buttons
-const ActionsCellRenderer = () => {
-  return (
-    <div className="h-full flex gap-2 justify-center items-center">
-      <button className="bg-none border-none cursor-pointer">
-        <Icons.trash />
-      </button>
-      <button className="bg-none border-none cursor-pointer">
-        <Icons.download />
-      </button>
-      <button className="bg-none border-none cursor-pointer">
-        <Icons.edit />
-      </button>
-    </div>
-  );
-};
-
-const LatestOrders: React.FC = () => {
+const Tasks: React.FC = () => {
   const [rowData] = useState<RowData[]>([
     {
-      requestId: "#12567",
-      client: "فهد القحطاني",
-      service: "طباعة PDF",
+      taskNumber: "001",
+      client: "أحمد الزهراني",
+      task: "ترجمة تقرير",
+      language: "عربي/إنجليزي",
+      method: "موقع الشركة",
       status: "completed",
-      date: "قبل 10 دقائق",
-      employee: "سعود الحربي",
+      startDate: "2025-03-29",
+      deliveryDate: "2025-04-02",
+      comments: "لا توجد ملاحظات",
     },
     {
-      requestId: "#12567",
-      client: "عبدالله المطيري",
-      service: "ترجمة إنجليزي",
-      status: "rejected",
-      date: "قبل ساعة",
-      employee: "فهد الدوسري",
-    },
-    {
-      requestId: "#12567",
-      client: "نايف العتيبي",
-      service: "طباعة PDF",
+      taskNumber: "002",
+      client: "خالد السعيد",
+      task: "ترجمة مستندات",
+      language: "إنجليزي/فرنسي",
+      method: "دليفري",
       status: "completed",
-      date: "قبل 3 ساعات",
-      employee: "خالد القامدي",
+      startDate: "2025-03-28",
+      deliveryDate: "2025-04-01",
+      comments: "تم التسليم بنجاح",
     },
     {
-      requestId: "#12567",
-      client: "سالم الدوسري",
-      service: "ترجمة فرنسي",
+      taskNumber: "003",
+      client: "ماجد العتيبي",
+      task: "ترجمة مقالة",
+      language: "فرنسي/عربي",
+      method: "موقع الشركة",
       status: "inProgress",
-      date: "قبل 5 ساعات",
-      employee: "تركي الشمري",
+      startDate: "2025-03-27",
+      deliveryDate: "2025-03-30",
+      comments: "بحاجة إلى مراجعة",
     },
   ]);
 
   const [columnDefs] = useState<ColDef[]>([
     {
       headerName: "رقم الطلب",
-      field: "requestId",
+      field: "taskNumber",
       minWidth: 100,
       cellStyle: {
         textAlign: "center",
@@ -139,8 +104,76 @@ const LatestOrders: React.FC = () => {
       },
     },
     {
-      headerName: "العميل",
+      headerName: "المهمة",
+      field: "task",
+      minWidth: 100,
+      cellStyle: {
+        textAlign: "center",
+        color: "var(--color-text-normal)",
+        fontWeight: "500",
+        fontSize: ".875rem",
+      },
+      headerStyle: {
+        fontSize: ".75rem",
+        fontWeight: 600,
+        backgroundColor: "var(--color-table-border)",
+        color: "#000",
+      },
+    },
+    {
+      headerName: "اللغة (من/إلى)",
+      field: "language",
+      minWidth: 120,
+      cellStyle: {
+        textAlign: "center",
+        color: "var(--color-text-normal)",
+        fontWeight: "500",
+        fontSize: ".875rem",
+      },
+      headerStyle: {
+        fontSize: ".75rem",
+        fontWeight: 600,
+        backgroundColor: "var(--color-table-border)",
+        color: "#000",
+      },
+    },
+    {
+      headerName: "اسم العميل",
       field: "client",
+      minWidth: 140,
+      cellStyle: {
+        textAlign: "center",
+        color: "var(--color-text-normal)",
+        fontWeight: "500",
+        fontSize: ".875rem",
+      },
+      headerStyle: {
+        fontSize: ".75rem",
+        fontWeight: 600,
+        backgroundColor: "var(--color-table-border)",
+        color: "#000",
+      },
+    },
+    {
+      headerName: "طريقة الاستلام",
+      field: "method",
+      minWidth: 140,
+      cellStyle: {
+        textAlign: "center",
+        color: "var(--color-text-normal)",
+        fontWeight: "500",
+        fontSize: ".875rem",
+      },
+      headerStyle: {
+        fontSize: ".75rem",
+        fontWeight: 600,
+        backgroundColor: "var(--color-table-border)",
+        color: "#000",
+      },
+    },
+    {
+      headerName: "تاريخ البدء",
+      field: "startDate",
       minWidth: 100,
       cellStyle: {
         textAlign: "center",
@@ -156,8 +189,8 @@ const LatestOrders: React.FC = () => {
       },
     },
     {
-      headerName: "الخدمة",
-      field: "service",
+      headerName: "تاريخ التسليم",
+      field: "deliveryDate",
       minWidth: 100,
       cellStyle: {
         textAlign: "center",
@@ -173,9 +206,9 @@ const LatestOrders: React.FC = () => {
       },
     },
     {
-      headerName: "الحالة",
+      headerName: "حالة المهمة",
       field: "status",
-      minWidth: 100,
+      minWidth: 120,
       cellRenderer: StatusCellRenderer,
       cellStyle: {
         fontSize: ".75rem",
@@ -190,45 +223,9 @@ const LatestOrders: React.FC = () => {
       },
     },
     {
-      headerName: "التاريخ",
-      field: "date",
+      headerName: "ملاحظات إضافية",
+      field: "comments",
       minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "الموظف",
-      field: "employee",
-      minWidth: 140,
-      cellRenderer: EmployeeCellRenderer,
-      cellStyle: {
-        textAlign: "center",
-        color: "#000",
-        fontWeight: "600",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "الإجراءات",
-      field: "actions",
-      minWidth: 100,
-      cellRenderer: ActionsCellRenderer,
       cellStyle: {
         textAlign: "center",
         color: "var(--color-text-normal)",
@@ -274,4 +271,4 @@ const LatestOrders: React.FC = () => {
   );
 };
 
-export default LatestOrders;
+export default Tasks;

@@ -2,130 +2,68 @@ import React, { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
-import { Icons } from "./Icons";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 interface RowData {
-  requestId: string;
-  client: string;
-  service: string;
-  charCount: string | number;
-  status: "completed" | "rejected" | "inProgress";
-  date: string;
-  amount: string;
+  employeeNumber: number;
+  employeeName: string;
+  department: string;
+  monthlySalary: string;
+  annualSalary: string;
+  bonuses: string;
+  discounts: string;
+  billingState: string;
 }
 
-// Custom cell renderer for status column
-const StatusCellRenderer = (props: any) => {
-  const status = props.value;
-  let color = "";
-  let background = "";
-  let text = "";
-  let icon = "•";
-
-  if (status === "completed") {
-    color = "var(--color-green-color)";
-    background = "var(--color-green-hover)";
-    text = "مكتمل";
-  } else if (status === "rejected") {
-    color = "var(--color-red-color)";
-    background = "var(--color-red-hover)";
-    text = "مرفوض";
-  } else if (status === "inProgress") {
-    color = "var(--color-yellow-color)";
-    background = "var(--color-yellow-hover)";
-    text = "قيد المعالجة";
-  }
-
-  return (
-    <div dir="rtl" className="flex h-full items-center justify-center">
-      <div
-        className="font-bold flex items-center gap-1 px-2 py-3 h-0 rounded-full"
-        style={{ background, color: color }}
-      >
-        <span className="text-lg mr-1">{icon}</span>
-        {text}
-      </div>
-    </div>
-  );
-};
-
-// Custom cell renderer for action buttons
-const ActionsCellRenderer = () => {
-  return (
-    <div className="h-full flex gap-2 justify-center items-center">
-      <button className="bg-none border-none cursor-pointer">
-        <Icons.trash />
-      </button>
-      <button className="bg-none border-none cursor-pointer">
-        <Icons.download />
-      </button>
-      <button className="bg-none border-none cursor-pointer">
-        <Icons.edit />
-      </button>
-    </div>
-  );
-};
-
-// Custom cell renderer for amounts with currency
-const AmountCellRenderer = (props: any) => {
-  const amount = props.value;
-
-  return (
-    <div
-      dir="rtl"
-      className="flex items-center justify-center text-primary-color font-medium"
-    >
-      {amount}
-    </div>
-  );
-};
-
-const NewOrdes: React.FC = () => {
+const EmployeesCosts: React.FC = () => {
   const [rowData] = useState<RowData[]>([
     {
-      requestId: "#12345",
-      client: "أحمد الزهراني",
-      service: "طباعة PDF",
-      charCount: "———",
-      status: "completed",
-      date: "قبل 5 ساعات",
-      amount: "500 ر.س",
+      employeeNumber: 101,
+      employeeName: "أحمد الزهراني",
+      department: "ترجمة",
+      monthlySalary: "2,000 ر.س",
+      annualSalary: "24,000 ر.س",
+      bonuses: "1,000 ر.س",
+      discounts: "200ر.س",
+      billingState: "مدفوع",
     },
     {
-      requestId: "#12346",
-      client: "خالد السعيد",
-      service: "ترجمة إنجليزي",
-      charCount: "800حرف",
-      status: "rejected",
-      date: "قبل ساعة",
-      amount: "750 ر.س",
+      employeeNumber: 102,
+      employeeName: "خالد السعيد",
+      department: "طباعة",
+      monthlySalary: "3,000 ر.س",
+      annualSalary: "36,000 ر.س",
+      bonuses: "700 ر.س",
+      discounts: "100 ر.س",
+      billingState: "غير مدفوع",
     },
     {
-      requestId: "#12347",
-      client: "ماجد العتيبي",
-      service: "طباعة PDF",
-      charCount: "———",
-      status: "completed",
-      date: "قبل 6 ساعات",
-      amount: "300 ر.س",
+      employeeNumber: 103,
+      employeeName: "ماجد العتيبي",
+      department: "ترجمة",
+      monthlySalary: "2,000 ر.س",
+      annualSalary: "24,000 ر.س",
+      bonuses: "500 ر.س",
+      discounts: "100 ر.س",
+      billingState: "مدفوع",
     },
     {
-      requestId: "#12348",
-      client: "فهد الدوسري",
-      service: "ترجمة فرنسي",
-      charCount: "1000حرف",
-      status: "inProgress",
-      date: "قبل 3 ساعات",
-      amount: "950 ر.س",
+      employeeNumber: 104,
+      employeeName: "ياسين المصري",
+      department: "طباعة",
+      monthlySalary: "4,000 ر.س",
+      annualSalary: "48,000 ر.س",
+      bonuses: "1,100 ر.س",
+      discounts: "300 ر.س",
+      billingState: "غير مدفوع",
     },
   ]);
 
   const [columnDefs] = useState<ColDef[]>([
     {
       headerName: "رقم الطلب",
-      field: "requestId",
+      field: "employeeNumber",
       minWidth: 100,
       cellStyle: {
         textAlign: "center",
@@ -141,8 +79,25 @@ const NewOrdes: React.FC = () => {
       },
     },
     {
-      headerName: "العميل",
-      field: "client",
+      headerName: "المهمة",
+      field: "department",
+      minWidth: 100,
+      cellStyle: {
+        textAlign: "center",
+        color: "var(--color-text-normal)",
+        fontWeight: "500",
+        fontSize: ".875rem",
+      },
+      headerStyle: {
+        fontSize: ".75rem",
+        fontWeight: 600,
+        backgroundColor: "var(--color-table-border)",
+        color: "#000",
+      },
+    },
+    {
+      headerName: "اللغة (من/إلى)",
+      field: "monthlySalary",
       minWidth: 120,
       cellStyle: {
         textAlign: "center",
@@ -158,9 +113,9 @@ const NewOrdes: React.FC = () => {
       },
     },
     {
-      headerName: "الخدمة",
-      field: "service",
-      minWidth: 120,
+      headerName: "اسم العميل",
+      field: "employeeName",
+      minWidth: 140,
       cellStyle: {
         textAlign: "center",
         color: "var(--color-text-normal)",
@@ -175,9 +130,9 @@ const NewOrdes: React.FC = () => {
       },
     },
     {
-      headerName: "عدد الأحرف",
-      field: "charCount",
-      minWidth: 100,
+      headerName: "طريقة الاستلام",
+      field: "annualSalary",
+      minWidth: 140,
       cellStyle: {
         textAlign: "center",
         color: "var(--color-text-normal)",
@@ -192,25 +147,8 @@ const NewOrdes: React.FC = () => {
       },
     },
     {
-      headerName: "الحالة",
-      field: "status",
-      minWidth: 100,
-      cellRenderer: StatusCellRenderer,
-      cellStyle: {
-        fontSize: ".75rem",
-        textAlign: "center",
-        fontWeight: "600",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "التاريخ",
-      field: "date",
+      headerName: "تاريخ البدء",
+      field: "bonuses",
       minWidth: 100,
       cellStyle: {
         textAlign: "center",
@@ -226,12 +164,12 @@ const NewOrdes: React.FC = () => {
       },
     },
     {
-      headerName: "المبلغ",
-      field: "amount",
+      headerName: "تاريخ التسليم",
+      field: "discounts",
       minWidth: 100,
-      cellRenderer: AmountCellRenderer,
       cellStyle: {
         textAlign: "center",
+        color: "var(--color-text-normal)",
         fontWeight: "500",
         fontSize: ".875rem",
       },
@@ -243,10 +181,9 @@ const NewOrdes: React.FC = () => {
       },
     },
     {
-      headerName: "الإجراءات",
-      field: "actions",
+      headerName: "ملاحظات إضافية",
+      field: "billingState",
       minWidth: 100,
-      cellRenderer: ActionsCellRenderer,
       cellStyle: {
         textAlign: "center",
         color: "var(--color-text-normal)",
@@ -292,4 +229,4 @@ const NewOrdes: React.FC = () => {
   );
 };
 
-export default NewOrdes;
+export default EmployeesCosts;
