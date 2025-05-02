@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
@@ -6,24 +6,22 @@ import { Icons } from "./Icons";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-interface ClientData {
+interface EmployeeData {
   id: number;
   name: string;
   email: string;
-  phone: string;
-  orderCount: string;
-  status: "active" | "inactive";
-  registrationDate: string;
-  lastActivity: string;
-  totalPayments: string;
+  status: "present" | "late" | "absent";
+  section: string;
+  attendanceTime: string;
+  leaveTime: string;
 }
 
-// Custom cell renderer for client name and email
-const ClientCellRenderer = (props: any) => {
+// Custom cell renderer for employee name and email
+const EmployeeCellRenderer = (props: any) => {
   const { name, email } = props.data;
 
   return (
-    <div dir="rtl" className="flex flex-col items-end">
+    <div className="flex flex-col items-start">
       <div className="font-bold text-sm">{name}</div>
       <div className="text-gray-500 text-xs">{email}</div>
     </div>
@@ -36,20 +34,27 @@ const StatusCellRenderer = (props: any) => {
   let color = "";
   let background = "";
   let text = "";
-  let icon = "•";
+  let icon;
 
-  if (status === "active") {
+  if (status === "present") {
     color = "var(--color-green-color)";
     background = "var(--color-green-hover)";
-    text = "نشط";
-  } else if (status === "inactive") {
+    text = "حاضر";
+    icon = <Icons.present />;
+  } else if (status === "late") {
+    color = "var(--color-yellow-color)";
+    background = "var(--color-yellow-hover)";
+    text = "متأخر";
+    icon = <Icons.late />;
+  } else if (status === "absent") {
     color = "var(--color-red-color)";
     background = "var(--color-red-hover)";
-    text = "غير نشط";
+    text = "غائب";
+    icon = <Icons.absent />;
   }
 
   return (
-    <div dir="rtl" className="flex h-full items-center justify-center">
+    <div className="flex h-full items-center justify-center">
       <div
         className="font-bold flex items-center gap-1 px-2 py-3 h-0 rounded-full"
         style={{ background, color: color }}
@@ -78,52 +83,34 @@ const ActionsCellRenderer = () => {
   );
 };
 
-const CustomerDetails: React.FC = () => {
-  const gridRef = useRef<AgGridReact>(null);
-  const [rowData] = useState<ClientData[]>([
+const EmployeesAttendance: React.FC = () => {
+  const [rowData] = useState<EmployeeData[]>([
     {
       id: 1,
       name: "عبد الله القحطاني",
       email: "abdallah2@email.com",
-      phone: "0501234567",
-      orderCount: "18 طلب",
-      status: "active",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 15, 2025",
-      totalPayments: "7,200 ر.س",
+      section: "الترجمة",
+      status: "present",
+      attendanceTime: "08:00 صباحًا",
+      leaveTime: "04:00 مساءً",
     },
     {
       id: 2,
       name: "فهد الدوسري",
       email: "fahd.d3@email.com",
-      phone: "0559876543",
-      orderCount: "17 طلب",
-      status: "inactive",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 19, 2025",
-      totalPayments: "6,300 ر.س",
+      section: "الطباعة",
+      status: "late",
+      attendanceTime: "09:15 صباحًا",
+      leaveTime: "05:15 مساءً",
     },
     {
       id: 3,
       name: "نايف المطيري",
       email: "naif.98@email.com",
-      phone: "0587654321",
-      orderCount: "12 طلب",
-      status: "active",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 13, 2025",
-      totalPayments: "2,100 ر.س",
-    },
-    {
-      id: 4,
-      name: "راكان الشمري",
-      email: "rakan.r@email.com",
-      phone: "0512345678",
-      orderCount: "15 طلب",
-      status: "inactive",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 20, 2025",
-      totalPayments: "1,200 ر.س",
+      section: "الترجمة",
+      status: "absent",
+      attendanceTime: "لم يسجل",
+      leaveTime: "لم يسجل",
     },
   ]);
 
@@ -131,7 +118,7 @@ const CustomerDetails: React.FC = () => {
     {
       headerName: "اسم العميل",
       field: "name",
-      cellRenderer: ClientCellRenderer,
+      cellRenderer: EmployeeCellRenderer,
       minWidth: 150,
       cellStyle: {
         textAlign: "right",
@@ -144,39 +131,7 @@ const CustomerDetails: React.FC = () => {
       },
     },
     {
-      headerName: "رقم الهاتف",
-      field: "phone",
-      minWidth: 120,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
-    },
-    {
-      headerName: "عدد الطلبات",
-      field: "orderCount",
-      minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
-    },
-    {
-      headerName: "حالة العميل",
+      headerName: "الحالة",
       field: "status",
       minWidth: 100,
       cellRenderer: StatusCellRenderer,
@@ -191,26 +146,9 @@ const CustomerDetails: React.FC = () => {
       },
     },
     {
-      headerName: "تاريخ التسجيل",
-      field: "registrationDate",
-      minWidth: 130,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
-      sort: "desc",
-    },
-    {
-      headerName: "آخر نشاط",
-      field: "lastActivity",
-      minWidth: 130,
+      headerName: "القسم",
+      field: "section",
+      minWidth: 120,
       cellStyle: {
         textAlign: "center",
         color: "var(--color-text-normal)",
@@ -224,13 +162,29 @@ const CustomerDetails: React.FC = () => {
       },
     },
     {
-      headerName: "إجمالي المدفوعات",
-      field: "totalPayments",
+      headerName: "وقت الحضور",
+      field: "attendanceTime",
       minWidth: 100,
       cellStyle: {
         textAlign: "center",
-        color: "var(--color-primary-color, #0091FF)",
+        color: "var(--color-text-normal)",
         fontWeight: "500",
+        fontSize: ".875rem",
+      },
+      headerStyle: {
+        backgroundColor: "var(--color-table-border)",
+        textAlign: "center",
+        fontSize: ".875rem",
+        fontWeight: 600,
+      },
+    },
+    {
+      headerName: "وقت الانصراف",
+      field: "leaveTime",
+      minWidth: 130,
+      cellStyle: {
+        textAlign: "center",
+        color: "var(--color-text-normal)",
         fontSize: ".875rem",
       },
       headerStyle: {
@@ -277,14 +231,10 @@ const CustomerDetails: React.FC = () => {
         }}
       >
         <AgGridReact
-          ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           onGridReady={onGridReady}
-          rowSelection={{ mode: "multiRow", groupSelects: "descendants" }}
-          paginationAutoPageSize={true}
-          pagination={true}
           domLayout="autoHeight"
           headerHeight={50}
         />
@@ -293,4 +243,4 @@ const CustomerDetails: React.FC = () => {
   );
 };
 
-export default CustomerDetails;
+export default EmployeesAttendance;

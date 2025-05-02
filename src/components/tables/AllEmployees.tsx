@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
@@ -6,26 +6,37 @@ import { Icons } from "./Icons";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-interface ClientData {
+interface EmployeeData {
   id: number;
   name: string;
   email: string;
-  phone: string;
-  orderCount: string;
   status: "active" | "inactive";
-  registrationDate: string;
+  phone: string;
+  address: string;
+  currentOrders: number;
   lastActivity: string;
-  totalPayments: string;
 }
 
-// Custom cell renderer for client name and email
-const ClientCellRenderer = (props: any) => {
+// Custom cell renderer for employee name and email
+const EmployeeCellRenderer = (props: any) => {
   const { name, email } = props.data;
 
   return (
     <div dir="rtl" className="flex flex-col items-end">
       <div className="font-bold text-sm">{name}</div>
       <div className="text-gray-500 text-xs">{email}</div>
+    </div>
+  );
+};
+
+// Custom cell renderer for employee name and email
+const OrderSellRenderer = (props: any) => {
+  const { currentOrders } = props.data;
+
+  return (
+    <div dir="rtl" className="flex justify-center gap-x-1">
+      <div className="text-primary-color">{currentOrders}</div>
+      <div className="">طلب</div>
     </div>
   );
 };
@@ -78,52 +89,47 @@ const ActionsCellRenderer = () => {
   );
 };
 
-const CustomerDetails: React.FC = () => {
-  const gridRef = useRef<AgGridReact>(null);
-  const [rowData] = useState<ClientData[]>([
+const AllEmployees: React.FC = () => {
+  const [rowData] = useState<EmployeeData[]>([
     {
       id: 1,
       name: "عبد الله القحطاني",
       email: "abdallah2@email.com",
       phone: "0501234567",
-      orderCount: "18 طلب",
+      currentOrders: 18,
       status: "active",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 15, 2025",
-      totalPayments: "7,200 ر.س",
+      lastActivity: "اليوم",
+      address: "الرياض",
     },
     {
       id: 2,
       name: "فهد الدوسري",
       email: "fahd.d3@email.com",
       phone: "0559876543",
-      orderCount: "17 طلب",
+      currentOrders: 12,
       status: "inactive",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 19, 2025",
-      totalPayments: "6,300 ر.س",
+      lastActivity: "منذ 3 ساعات",
+      address: "جدة",
     },
     {
       id: 3,
       name: "نايف المطيري",
       email: "naif.98@email.com",
       phone: "0587654321",
-      orderCount: "12 طلب",
+      currentOrders: 7,
       status: "active",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 13, 2025",
-      totalPayments: "2,100 ر.س",
+      lastActivity: "منذ 3 ساعات",
+      address: "الدمام",
     },
     {
       id: 4,
       name: "راكان الشمري",
       email: "rakan.r@email.com",
       phone: "0512345678",
-      orderCount: "15 طلب",
+      currentOrders: 3,
       status: "inactive",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 20, 2025",
-      totalPayments: "1,200 ر.س",
+      lastActivity: "منذ ساعتين",
+      address: "مكة",
     },
   ]);
 
@@ -131,7 +137,7 @@ const CustomerDetails: React.FC = () => {
     {
       headerName: "اسم العميل",
       field: "name",
-      cellRenderer: ClientCellRenderer,
+      cellRenderer: EmployeeCellRenderer,
       minWidth: 150,
       cellStyle: {
         textAlign: "right",
@@ -139,6 +145,21 @@ const CustomerDetails: React.FC = () => {
       headerStyle: {
         backgroundColor: "var(--color-table-border)",
         textAlign: "right",
+        fontSize: ".875rem",
+        fontWeight: 600,
+      },
+    },
+    {
+      headerName: "الحالة",
+      field: "status",
+      minWidth: 100,
+      cellRenderer: StatusCellRenderer,
+      cellStyle: {
+        textAlign: "center",
+      },
+      headerStyle: {
+        backgroundColor: "var(--color-table-border)",
+        textAlign: "center",
         fontSize: ".875rem",
         fontWeight: 600,
       },
@@ -160,9 +181,27 @@ const CustomerDetails: React.FC = () => {
       },
     },
     {
-      headerName: "عدد الطلبات",
-      field: "orderCount",
+      headerName: "العنوان",
+      field: "address",
       minWidth: 100,
+      cellStyle: {
+        textAlign: "center",
+        color: "var(--color-text-normal)",
+        fontWeight: "500",
+        fontSize: ".875rem",
+      },
+      headerStyle: {
+        backgroundColor: "var(--color-table-border)",
+        textAlign: "center",
+        fontSize: ".875rem",
+        fontWeight: 600,
+      },
+    },
+    {
+      headerName: "الطلبات الحالية",
+      field: "currentOrders",
+      minWidth: 100,
+      cellRenderer: OrderSellRenderer,
       cellStyle: {
         textAlign: "center",
         color: "var(--color-text-normal)",
@@ -176,61 +215,12 @@ const CustomerDetails: React.FC = () => {
       },
     },
     {
-      headerName: "حالة العميل",
-      field: "status",
-      minWidth: 100,
-      cellRenderer: StatusCellRenderer,
-      cellStyle: {
-        textAlign: "center",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
-    },
-    {
-      headerName: "تاريخ التسجيل",
-      field: "registrationDate",
-      minWidth: 130,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
-      sort: "desc",
-    },
-    {
-      headerName: "آخر نشاط",
+      headerName: "آخر تسجيل",
       field: "lastActivity",
       minWidth: 130,
       cellStyle: {
         textAlign: "center",
         color: "var(--color-text-normal)",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
-    },
-    {
-      headerName: "إجمالي المدفوعات",
-      field: "totalPayments",
-      minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-primary-color, #0091FF)",
-        fontWeight: "500",
         fontSize: ".875rem",
       },
       headerStyle: {
@@ -277,14 +267,10 @@ const CustomerDetails: React.FC = () => {
         }}
       >
         <AgGridReact
-          ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           onGridReady={onGridReady}
-          rowSelection={{ mode: "multiRow", groupSelects: "descendants" }}
-          paginationAutoPageSize={true}
-          pagination={true}
           domLayout="autoHeight"
           headerHeight={50}
         />
@@ -293,4 +279,4 @@ const CustomerDetails: React.FC = () => {
   );
 };
 
-export default CustomerDetails;
+export default AllEmployees;

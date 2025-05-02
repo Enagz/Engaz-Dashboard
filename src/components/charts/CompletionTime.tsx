@@ -3,18 +3,15 @@
 import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
 
 import { CardContent } from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-const chartData = [{ month: "oreders", completed: 56, incompleted: 9 }];
+import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+const chartData = [
+  { month: "orders", completed: 15, incompleted: 9, time: "2:30" },
+];
 
 const chartConfig = {
   completed: {
     label: "Completed",
-    color: "#1B8354",
+    color: "#3E97D1",
   },
   incompleted: {
     label: "Incompleted",
@@ -22,9 +19,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function CompletedOrders() {
-  const totalVisitors = chartData[0].completed + chartData[0].incompleted;
-
+export default function CompletionTime() {
   return (
     <CardContent className="-mt-10 -mb-32 flex flex-1 items-center pb-0">
       <ChartContainer
@@ -37,10 +32,6 @@ export default function CompletedOrders() {
           innerRadius={100}
           outerRadius={130}
         >
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent hideLabel />}
-          />
           <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
             <Label
               content={({ viewBox }) => {
@@ -53,17 +44,9 @@ export default function CompletedOrders() {
                         className="fill-foreground text-2xl font-bold"
                       >
                         <tspan className="fill-primary-color">
-                          {chartData[0].completed.toLocaleString()}
+                          {chartData[0].time.toLocaleString()}
                         </tspan>
-                        <tspan> Order</tspan>
-                        <tspan className="fill-muted-foreground text-sm font-normal">
-                          {" "}
-                          {(
-                            (chartData[0].completed / totalVisitors) *
-                            100
-                          ).toFixed()}
-                          %
-                        </tspan>
+                        <tspan> ساعة</tspan>
                       </tspan>
                     </text>
                   );
