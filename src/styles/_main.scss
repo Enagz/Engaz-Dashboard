@@ -250,123 +250,6 @@ $error_color: #e31d1c;
   }
 }
 
-.header {
-  background-color: #ffffff;
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.08);
-  padding: 16px 24px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  direction: rtl;
-
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-
-      .user-avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        overflow: hidden;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-
-      .greeting-section {
-        text-align: right;
-      }
-
-      .greeting-text {
-        h1 {
-          font-size: 18px;
-          font-weight: 600;
-          color: #1A1A1A;
-          margin: 0;
-          line-height: 24px;
-        }
-
-        p {
-          font-size: 14px;
-          color: #666666;
-          margin: 0;
-          line-height: 20px;
-          font-weight: 400;
-        }
-      }
-    }
-
-    .search-bar {
-      flex: 1;
-      max-width: 400px;
-      margin: 0 16px;
-      position: relative;
-
-      input {
-        width: 100%;
-        padding: 8px 40px 8px 12px;
-        border: 1px solid #E0E0E0;
-        border-radius: 6px;
-        text-align: right;
-        font-size: 14px;
-        background-color: #FAFAFA;
-        transition: all 0.2s;
-
-        &:focus {
-          outline: none;
-          border-color: #4D90FE;
-          background-color: #FFFFFF;
-          box-shadow: 0 0 0 2px rgba(77, 144, 254, 0.2);
-        }
-
-        &::placeholder {
-          color: #999999;
-          opacity: 1;
-        }
-      }
-
-      .search-icon {
-        position: absolute;
-        top: 50%;
-        right: 12px;
-        transform: translateY(-50%);
-        color: #999999;
-        pointer-events: none;
-      }
-    }
-
-    .settings-language {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      button {
-        background: none;
-        border: none;
-        padding: 8px;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: background-color 0.2s;
-
-        &:hover {
-          background-color: #F5F5F5;
-        }
-      }
-    }
-  }
-}
-
 .rightSidebar {
   background-color: $primary_color;
   color: $containers_bg;
@@ -968,6 +851,534 @@ $error_color: #e31d1c;
 
           .chart-container {
             height: 300px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+.customers-container {
+  padding: 24px;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  align-items: stretch;
+
+  .button-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 24px;
+
+    .pageTitle {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: $text_header; /* Ensure this variable is defined */
+      align-self: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px; /* Add some space below the breadcrumb */
+  }
+
+
+  .breadcrumb-link {
+    text-decoration: none;
+    color: $primary_color; /* Ensure this variable is defined */
+    font-size: 1rem;
+}
+
+.breadcrumb-separator {
+    margin: 0 8px;
+    color: $text_header; /* Ensure this variable is defined */
+    font-size: 1rem;
+}
+
+.breadcrumb-current {
+    color: $text_header; /* Ensure this variable is defined */
+    font-size: 1rem;
+}
+    .addCustomerButton {
+      background-color: $primary_color;
+      color: $global_bg;
+      align-self: flex-end;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+
+      &:hover {
+        background-color: #317eb896;
+      }
+    }
+  }
+
+  .statisticsContainer {
+    margin-bottom: 32px;
+    width: 100%;
+  }
+
+  .detailsContainer {
+    margin-bottom: 24px;
+    width: 100%;
+
+    .sectionTitle {
+      direction: rtl;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: $text_header;
+      margin-bottom: 16px;
+    }
+  }
+
+  .bestCustomersContainer {
+    width: 100%;
+
+    .sectionTitle {
+      direction: rtl;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: $text_header;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+.customers-details-container {
+  background-color: $global_bg;
+  padding: 24px;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  align-items: stretch;
+
+  .button-detailed-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 24px;
+
+    .pageDetaildeTitle {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: $text_header;
+      align-self: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+
+      .breadcrumb-link {
+        text-decoration: none;
+        color: $primary_color;
+        font-size: 1rem;
+      }
+
+      .breadcrumb-separator {
+        margin: 0 8px;
+        color: $text_header;
+        font-size: 1rem;
+      }
+
+      .breadcrumb-current {
+        color: $text_header;
+        font-size: 1rem;
+      }
+    }
+
+    .addCustomerButton {
+      background-color: $primary_color;
+      color: $global_bg;
+      align-self: flex-end;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+
+      &:hover {
+        background-color: #317eb896;
+      }
+    }
+  }
+
+  .statisticsContainer {
+    margin-bottom: 32px;
+    width: 100%;
+  }
+
+  .detailsContainer {
+    margin-bottom: 24px;
+    width: 100%;
+
+    .sectionTitle {
+      direction: rtl;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: $text_header;
+      margin-bottom: 16px;
+    }
+  }
+
+  .bestCustomersContainer {
+    width: 100%;
+
+    .sectionTitle {
+      direction: rtl;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: $text_header;
+      margin-bottom: 16px;
+    }
+  }
+
+  .sectionWrapper {
+    margin-bottom: 30px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    .sectionTitle {
+      direction: rtl;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: $text_header;
+      margin-bottom: 16px;
+    }
+
+    .customerInfoCard,
+    .ordersChartCard {
+      background-color: $containers_bg;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      flex-grow: 1;
+
+      .cardHeader {
+        display: flex; // Add this
+        justify-content: flex-end; // Add this to push content to the end
+        padding: 10px; // Optional: add some padding
+        
+        .actionButtons {
+          display: flex;
+          gap: 10px;
+      
+          .editButton,
+          .deleteButton {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+          }
+      
+          .editButton {
+            background-color: #3498db;
+            color: white;
+          }
+      
+          .deleteButton {
+            background-color: #e74c3c;
+            color: white;
+          }
+        }
+      }
+
+      .infoGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+
+        .formItem {
+          display: flex;
+          flex-direction: column;
+
+          .infoLabel {
+            font-weight: 500;
+            color: $text_header;
+            margin-bottom: 5px;
+            font-size: 14px;
+          }
+
+          .wrapper {
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
+            border: 1px solid #B3B3B333;
+            overflow: hidden;
+
+            .formIcon {
+              background-color: $primary_color;
+              color: white;
+              width: 35px;
+              padding: 6px;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            input[type="text"],
+            input[type="email"] {
+              height: 50px;
+              flex: 1;
+              padding: 0 12px;
+              border: none;
+              background: transparent;
+              font-size: 16px;
+              color: #333;
+
+              &::placeholder {
+                color: #aaa;
+              }
+            }
+          }
+        }
+      }
+
+      .chartPlaceholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 150px;
+      }
+    }
+
+    .ordersChartCard {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+  }
+
+  .customerDetailsPageContainer {
+    background-color: #F8F8F8;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 20px;
+    padding: 20px;
+    direction: rtl;
+    align-items: stretch;
+  }
+
+  .ordersLogSection {
+    margin-bottom: 30px;
+  
+    .ordersLogTitle {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: $text_header;
+      margin-bottom: 16px;
+      text-align: right;
+    }
+  
+    .ordersLogCard {
+      background-color: $containers_bg;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      grid-column: 1 / -1;
+  
+      .ordersTablePlaceholder {
+        // تنسيقات إضافية إذا لزم الأمر
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+.addCustomerPageContainer {
+  direction: rtl;
+  padding: 24px;
+  background-color: #f8f8f8;
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    font-size: 14px;
+
+    &-link {
+      color: $primary_color;
+      text-decoration: none;
+    }
+
+    &-separator {
+      margin: 0 8px;
+      color: $text_header;
+    }
+
+    &-current {
+      color: $text_header;
+      font-weight: 500;
+    }
+  }
+
+  .pageTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $text_header;
+    margin-bottom: 24px;
+    text-align: right;
+  }
+
+  .addCustomerCard {
+    background-color: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 60%;
+   
+
+    .formGrid {
+      display: grid;
+      // grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .formItem {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+
+      .infoLabel {
+        font-weight: 500;
+        color: $text_header;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .wrapper {
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        border: 1px solid rgba(179, 179, 179, 0.2);
+        overflow: hidden;
+        background-color: $global_bg;
+
+        .formIcon {
+          background-color: $primary_color;
+          color: $containers_bg;
+          width: 40px;
+          padding: 10px;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        input {
+          height: 48px;
+          flex: 1;
+          padding: 0 16px;
+          border: none;
+          background: transparent;
+          font-size: 16px;
+          color: #333;
+
+          &::placeholder {
+            color: #aaa;
+          }
+
+          .MuiTextField-root {
+            flex: 1;
+            
+            .MuiInputBase-root {
+              height: 48px;
+              padding: 0;
+              background: transparent;
+              
+              .MuiInputBase-input {
+                height: 48px;
+                flex: 1;
+                padding: 0 16px;
+                border: none;
+                background: $global_bg;
+                font-size: 16px;
+                color: #333;
+                
+                &::placeholder {
+                  color: #aaa;
+                  opacity: 1;
+                }
+              }
+              
+              fieldset {
+                border: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .formActions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-top: 24px;
+
+      button {
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        transition: all 0.3s ease;
+
+        &.cancelButton {
+          background-color: #E31D1C;
+          color: white;
+
+          &:hover {
+            background-color: #e31c1cc0;
+          }
+        }
+
+        &.saveButton {
+          background-color: $primary_color;
+          color: white;
+
+          &:hover {
+            background-color: darken($primary_color, 10%);
           }
         }
       }

@@ -40,8 +40,8 @@ export default function CustomerStatistics() {
   };
 
   return (
-    <Card className="w-full rounded-3xl bg-white p-0 border-none">
-      <CardContent className="flex flex-col md:flex-row items-center justify-center gap-6">
+    <Card className="w-full h-full rounded-3xl bg-white p-0 border-none">
+      <CardContent className="flex flex-col md:flex-row items-center justify-center gap-6 flex-grow">
         {/* Radial Chart */}
         <div className="relative w-72 h-72">
           <svg viewBox="0 0 300 300" className="w-full h-full">
@@ -61,6 +61,19 @@ export default function CustomerStatistics() {
             </text>
           </svg>
         </div>
+
+        {/* Legend */}
+        <ul className="flex flex-col space-y-2 text-sm">
+          {data.map((item, index) => (
+            <li key={index} className="flex items-center">
+              <span
+                className="w-4 h-4 rounded-full mr-2"
+                style={{ backgroundColor: item.color }}
+              ></span>
+              {item.name} ({item.percentage}%)
+            </li>
+          ))}
+        </ul>
       </CardContent>
     </Card>
   );
