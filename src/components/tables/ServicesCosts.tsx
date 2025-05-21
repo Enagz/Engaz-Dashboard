@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
-import { Icons } from "./Icons";
+import { Icons } from "./lcons";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Icons } from "@/components/tables/Icons";
+import { Icons } from "@/components/tables/lcons";
 import PrivacyForm from "@/components/forms/PrivacyForm";
 import { getUserRole } from "@/app/utils/auth.utils";
 import { enjazService } from "@/services/enjazService";

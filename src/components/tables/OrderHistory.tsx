@@ -14,7 +14,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 
 // Assuming Icons and enjazService are correctly set up in your project
-import { Icons } from "./Icons";
+import { Icons } from "./lcons";
 import { enjazService } from "@/services/enjazService";
 import OrdersForm from "../forms/OrdersForm";
 import ConfirmDialog from "../forms/ConfirmDialog";

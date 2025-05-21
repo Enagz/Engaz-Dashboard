@@ -6,7 +6,7 @@ import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
-import { Icons } from "./Icons";
+import { Icons } from "./lcons";
 import { enjazService } from "../../services/enjazService";
 
 ModuleRegistry.registerModules([AllCommunityModule]);

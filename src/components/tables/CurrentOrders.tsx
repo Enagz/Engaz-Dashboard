@@ -11,7 +11,7 @@ import OrdersForm from "../forms/OrdersForm";
 import ConfirmDialog from "../forms/ConfirmDialog";
 import SuccessDialog from "../forms/SuccessDialog";
 import { enjazService } from "@/services/enjazService";
-import { Icons } from "./Icons";
+import { Icons } from "./lcons";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 

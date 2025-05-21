@@ -7,7 +7,7 @@ import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
 import { useLocale, useTranslations } from "next-intl";
 
-import { Icons } from "./Icons";
+import { Icons } from "./lcons";
 import OrdersForm from "../forms/OrdersForm";
 import { enjazService } from "@/services/enjazService";
 

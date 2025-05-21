@@ -12,7 +12,7 @@ import {
 import { ModuleRegistry } from "ag-grid-community";
 import { useTranslations, useLocale } from "next-intl";
 
-import { Icons } from "./Icons";
+import { Icons } from "./lcons";
 import Link from "next/link";
 import { enjazService } from "@/services/enjazService";
 

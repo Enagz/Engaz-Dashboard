@@ -6,7 +6,7 @@ import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent } from "ag-grid-community";
 import { AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
-import { Icons } from "./Icons";
+import { Icons } from "./lcons";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 
