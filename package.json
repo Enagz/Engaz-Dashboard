@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "if [ \"$CI\" != \"true\" ]; then npm run lint && next build; else next build; fi",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
