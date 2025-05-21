@@ -19,6 +19,7 @@ export const Icons = {
         fill="#39B146"
       />
     </svg>
+    //
   ),
   download: (props: React.SVGProps<SVGSVGElement>) => (
     <svg
