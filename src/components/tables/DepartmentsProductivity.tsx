@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";

@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
 import { Star } from "lucide-react";
+import Image from "next/image";
+import { enjazService } from "@/services/enjazService";
+import { useTranslations, useLocale } from "next-intl";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -11,62 +16,58 @@ interface RowData {
   clientName: string;
   email: string;
   phone: string;
-  city: string;
   orders: string;
   registrationDate: string;
   totalPayments: string;
   rating: number;
 }
 
-// Custom cell renderer for rank column with badge
 const RankCellRenderer = (props: any) => {
   const rank = props.value;
-  let badgeColor = "";
+  let src = "/assets/illustrations/gold.png";
 
-  if (rank === "الأول") {
-    badgeColor = "#FFD700"; // Gold
-  } else if (rank === "الثاني") {
-    badgeColor = "#C0C0C0"; // Silver
-  } else if (rank === "الثالث") {
-    badgeColor = "#CD7F32"; // Bronze
+  if (rank.includes("Second") || rank.includes("الثاني")) {
+    src = "/assets/illustrations/silver.png";
+  } else if (rank.includes("Third") || rank.includes("الثالث")) {
+    src = "/assets/illustrations/bronze.png";
   }
 
   return (
     <div dir="rtl" className="flex items-center justify-center gap-2">
       <span className="font-bold text-primary-color">{rank}</span>
-      <div
-        className="size-6 rounded-full"
-        style={{ backgroundColor: badgeColor }}
-      ></div>
+      <div className="size-9 min-w-9 rounded-full flex items-center justify-center bg-[#3E97D114]">
+        <Image
+          src={src}
+          width={22}
+          height={32}
+          className="h-8 w-auto"
+          alt={`${rank} badge`}
+        />
+      </div>
     </div>
   );
 };
 
-// Custom cell renderer for rating column with stars
 const RatingCellRenderer = (props: any) => {
-  const rating = props.value;
+  const rating = props.value || 0;
   const stars = [];
 
   for (let i = 0; i < 5; i++) {
-    const filled = i < rating;
     stars.push(
-      <span
+      <Star
         key={i}
-        className="flex gap-2"
-        style={{
-          fill: filled ? "var(--color-yellow-color)" : "transparent",
-          stroke: "var(--color-yellow-color)",
-        }}
-      >
-        <Star className="size-5 stroke-yellow-color fill-inherit" />
-      </span>
+        className={`size-5 ${
+          i < rating
+            ? "fill-yellow-500 stroke-yellow-500"
+            : "fill-none stroke-yellow-500"
+        }`}
+      />
     );
   }
 
-  return <div className="flex justify-center gap-2">{stars}</div>;
+  return <div className="flex justify-center gap-1">{stars}</div>;
 };
 
-// Custom cell renderer for client name column
 const ClientCellRenderer = (props: any) => {
   const { email } = props.data;
   const name = props.value;
@@ -74,51 +75,76 @@ const ClientCellRenderer = (props: any) => {
   return (
     <div dir="rtl" className="flex flex-col items-end">
       <div className="font-bold text-black text-sm">{name}</div>
-      <div className="text-gray-500 text-xs">{email}</div>
+      <div className="text-text-normal text-xs">{email}</div>
     </div>
   );
 };
 
 const BestCustomers: React.FC = () => {
-  const [rowData] = useState<RowData[]>([
-    {
-      rank: "الأول",
-      clientName: "عبد الله القحطاني",
-      email: "abdallah2@email.com",
-      phone: "0501234567",
-      city: "الرياض",
-      orders: "18 طلب",
-      registrationDate: "Feb 19, 2023",
-      totalPayments: "7,200 ر.س",
-      rating: 5,
-    },
-    {
-      rank: "الثاني",
-      clientName: "فهد الدوسري",
-      email: "fahd.d3@email.com",
-      phone: "0559876543",
-      city: "جدة",
-      orders: "17 طلب",
-      registrationDate: "May 22, 2023",
-      totalPayments: "6,300 ر.س",
-      rating: 4,
-    },
-    {
-      rank: "الثالث",
-      clientName: "نايف المطيري",
-      email: "naif.98@email.com",
-      phone: "0587654321",
-      city: "الدمام",
-      orders: "12 طلب",
-      registrationDate: "Jun 19, 2024",
-      totalPayments: "2,100 ر.س",
-      rating: 3,
-    },
-  ]);
+  const t = useTranslations("bestCustomers");
+  const locale = useLocale();
+  const [rowData, setRowData] = useState<RowData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const [columnDefs] = useState<ColDef[]>([
+  useEffect(() => {
+    const fetchBestClients = async () => {
+      try {
+        const response = await enjazService.getBestClients();
+        const apiData = response.data?.bestClients || [];
+
+        const mappedData: RowData[] = apiData.map((client: any) => {
+          const rankMap: Record<number, string> = {
+            1: t("first"),
+            2: t("second"),
+            3: t("third"),
+          };
+
+          const rankText =
+            rankMap[client.rank] || t("times", { count: client.rank });
+
+          return {
+            rank: rankText,
+            clientName: client.name,
+            email: client.email,
+            phone: `${client.countrycode ?? ""}${client.phone}`,
+            orders:
+              client.ordersCounter > 0
+                ? t("ordersCount", { count: client.ordersCounter })
+                : t("none"),
+            registrationDate: new Date(client.createdAt).toLocaleDateString(
+              locale === "ar" ? "ar-SA" : "en-US",
+              {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              }
+            ),
+            totalPayments:
+              client.totalRevenue > 0
+                ? t("currency", {
+                    amount: client.totalRevenue.toLocaleString(),
+                  })
+                : t("none"),
+            rating: Math.round(client.rateAvg) || 0,
+          };
+        });
+
+        setRowData(mappedData);
+      } catch (err) {
+        console.error("Failed to load best clients", err);
+        setError(t("error"));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBestClients();
+  }, [t, locale]);
+
+  const [columnDefs] = useState<ColDef<RowData>[]>([
     {
-      headerName: "الترتيب",
+      headerName: t("rank"),
       field: "rank",
       minWidth: 100,
       cellRenderer: RankCellRenderer,
@@ -136,7 +162,7 @@ const BestCustomers: React.FC = () => {
       },
     },
     {
-      headerName: "اسم العميل",
+      headerName: t("clientName"),
       field: "clientName",
       minWidth: 180,
       cellRenderer: ClientCellRenderer,
@@ -154,7 +180,7 @@ const BestCustomers: React.FC = () => {
       },
     },
     {
-      headerName: "رقم الهاتف",
+      headerName: t("phone"),
       field: "phone",
       minWidth: 120,
       cellStyle: {
@@ -171,24 +197,7 @@ const BestCustomers: React.FC = () => {
       },
     },
     {
-      headerName: "المدينة",
-      field: "city",
-      minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "عدد الطلبات",
+      headerName: t("orders"),
       field: "orders",
       minWidth: 100,
       cellStyle: {
@@ -205,7 +214,7 @@ const BestCustomers: React.FC = () => {
       },
     },
     {
-      headerName: "تاريخ التسجيل",
+      headerName: t("registrationDate"),
       field: "registrationDate",
       minWidth: 130,
       cellStyle: {
@@ -222,7 +231,7 @@ const BestCustomers: React.FC = () => {
       },
     },
     {
-      headerName: "إجمالي المدفوعات",
+      headerName: t("totalPayments"),
       field: "totalPayments",
       minWidth: 140,
       cellStyle: {
@@ -239,7 +248,7 @@ const BestCustomers: React.FC = () => {
       },
     },
     {
-      headerName: "التقييم",
+      headerName: t("rating"),
       field: "rating",
       minWidth: 140,
       cellRenderer: RatingCellRenderer,
@@ -267,6 +276,10 @@ const BestCustomers: React.FC = () => {
   const onGridReady = (params: GridReadyEvent) => {
     params.api.sizeColumnsToFit();
   };
+
+  if (loading) return <div>{t("loading")}</div>;
+  if (error)
+    return <div className="text-red-500 text-center py-4">{error}</div>;
 
   return (
     <div

@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
+import { useLocale, useTranslations } from "next-intl";
+
 import { Icons } from "./Icons";
+import OrdersForm from "../forms/OrdersForm";
+import { enjazService } from "@/services/enjazService";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -11,38 +18,53 @@ interface RowData {
   client: string;
   service: string;
   charCount: string | number;
-  status: "completed" | "rejected" | "inProgress";
+  status: "completed" | "rejected" | "inProgress" | "offerSent" | "underReview";
   date: string;
-  amount: string;
+  amount: number;
 }
 
-// Custom cell renderer for status column
 const StatusCellRenderer = (props: any) => {
+  const t = useTranslations("newOrders");
   const status = props.value;
-  let color = "";
-  let background = "";
-  let text = "";
-  let icon = "•";
 
-  if (status === "completed") {
-    color = "var(--color-green-color)";
-    background = "var(--color-green-hover)";
-    text = "مكتمل";
-  } else if (status === "rejected") {
-    color = "var(--color-red-color)";
-    background = "var(--color-red-hover)";
-    text = "مرفوض";
-  } else if (status === "inProgress") {
-    color = "var(--color-yellow-color)";
-    background = "var(--color-yellow-hover)";
-    text = "قيد المعالجة";
+  let color = "",
+    background = "",
+    text = "",
+    icon = "•";
+
+  switch (status) {
+    case "completed":
+      color = "var(--color-green-color)";
+      background = "var(--color-green-hover)";
+      text = t("completed");
+      break;
+    case "rejected":
+      color = "var(--color-red-color)";
+      background = "var(--color-red-hover)";
+      text = t("rejected");
+      break;
+    case "offerSent":
+      color = "var(--color-blue-color)";
+      background = "var(--color-blue-hover)";
+      text = t("offerSent");
+      break;
+    case "underReview":
+      color = "var(--color-purple-color)";
+      background = "var(--color-purple-hover)";
+      text = t("underReview");
+      break;
+    case "inProgress":
+    default:
+      color = "var(--color-yellow-color)";
+      background = "var(--color-yellow-hover)";
+      text = t("inProgress");
   }
 
   return (
     <div dir="rtl" className="flex h-full items-center justify-center">
       <div
         className="font-bold flex items-center gap-1 px-2 py-3 h-0 rounded-full"
-        style={{ background, color: color }}
+        style={{ background, color }}
       >
         <span className="text-lg mr-1">{icon}</span>
         {text}
@@ -51,25 +73,39 @@ const StatusCellRenderer = (props: any) => {
   );
 };
 
-// Custom cell renderer for action buttons
-const ActionsCellRenderer = () => {
+const ActionsCellRenderer = (props: any) => {
+  const [formOpen, setFormOpen] = useState(false);
+  const { requestId, charCount, status, amount } = props.data;
+
   return (
     <div className="h-full flex gap-2 justify-center items-center">
+      <OrdersForm
+        open={formOpen}
+        setOpen={setFormOpen}
+        initialValues={{
+          numberofletters: charCount,
+          status: status,
+          cost: amount,
+          id: requestId,
+        }}
+      />
       <button className="bg-none border-none cursor-pointer">
-        <Icons.trash />
+        <Link href={`/orders/${requestId.replace("#", "")}`}>
+          <Icons.view />
+        </Link>
       </button>
-      <button className="bg-none border-none cursor-pointer">
-        <Icons.download />
-      </button>
-      <button className="bg-none border-none cursor-pointer">
+      <button
+        className="bg-none border-none cursor-pointer"
+        onClick={() => setFormOpen(true)}
+      >
         <Icons.edit />
       </button>
     </div>
   );
 };
 
-// Custom cell renderer for amounts with currency
 const AmountCellRenderer = (props: any) => {
+  const t = useTranslations("newOrders");
   const amount = props.value;
 
   return (
@@ -77,209 +113,131 @@ const AmountCellRenderer = (props: any) => {
       dir="rtl"
       className="flex items-center justify-center text-primary-color font-medium"
     >
-      {amount}
+      {amount} {t("sar")}
     </div>
   );
 };
 
-const NewOrdes: React.FC = () => {
-  const [rowData] = useState<RowData[]>([
-    {
-      requestId: "#12345",
-      client: "أحمد الزهراني",
-      service: "طباعة PDF",
-      charCount: "———",
-      status: "completed",
-      date: "قبل 5 ساعات",
-      amount: "500 ر.س",
-    },
-    {
-      requestId: "#12346",
-      client: "خالد السعيد",
-      service: "ترجمة إنجليزي",
-      charCount: "800حرف",
-      status: "rejected",
-      date: "قبل ساعة",
-      amount: "750 ر.س",
-    },
-    {
-      requestId: "#12347",
-      client: "ماجد العتيبي",
-      service: "طباعة PDF",
-      charCount: "———",
-      status: "completed",
-      date: "قبل 6 ساعات",
-      amount: "300 ر.س",
-    },
-    {
-      requestId: "#12348",
-      client: "فهد الدوسري",
-      service: "ترجمة فرنسي",
-      charCount: "1000حرف",
-      status: "inProgress",
-      date: "قبل 3 ساعات",
-      amount: "950 ر.س",
-    },
-  ]);
+const NewOrders: React.FC = () => {
+  const t = useTranslations("newOrders");
+  const locale = useLocale() as "ar" | "en";
+
+  const [rowData, setRowData] = useState<RowData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const baseStyle = {
+    textAlign: "center",
+    fontWeight: "500",
+    fontSize: ".875rem",
+    color: "var(--color-text-normal)",
+  };
 
   const [columnDefs] = useState<ColDef[]>([
     {
-      headerName: "رقم الطلب",
+      headerName: t("requestId"),
       field: "requestId",
       minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
+      cellStyle: baseStyle,
     },
     {
-      headerName: "العميل",
+      headerName: t("client"),
       field: "client",
       minWidth: 120,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
+      cellStyle: baseStyle,
     },
     {
-      headerName: "الخدمة",
+      headerName: t("service"),
       field: "service",
       minWidth: 120,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
+      cellStyle: baseStyle,
     },
     {
-      headerName: "عدد الأحرف",
-      field: "charCount",
-      minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "الحالة",
+      headerName: t("status"),
       field: "status",
       minWidth: 100,
       cellRenderer: StatusCellRenderer,
-      cellStyle: {
-        fontSize: ".75rem",
-        textAlign: "center",
-        fontWeight: "600",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
+      cellStyle: baseStyle,
     },
     {
-      headerName: "التاريخ",
+      headerName: t("date"),
       field: "date",
       minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
+      cellStyle: baseStyle,
     },
     {
-      headerName: "المبلغ",
+      headerName: t("amount"),
       field: "amount",
       minWidth: 100,
       cellRenderer: AmountCellRenderer,
-      cellStyle: {
-        textAlign: "center",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
+      cellStyle: baseStyle,
     },
     {
-      headerName: "الإجراءات",
+      headerName: t("actions"),
       field: "actions",
       minWidth: 100,
       cellRenderer: ActionsCellRenderer,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
+      cellStyle: baseStyle,
     },
   ]);
 
-  const defaultColDef = {
-    sortable: true,
-    filter: true,
-    resizable: true,
+  const defaultColDef = { sortable: true, filter: true, resizable: true };
+  const onGridReady = (params: GridReadyEvent) => params.api.sizeColumnsToFit();
+
+  const mapStatus = (status: string) => {
+    const normalized = status.toLowerCase().trim();
+    switch (normalized) {
+      case "finished":
+      case "مكتمل":
+        return "completed";
+      case "cancelled":
+      case "ملغي":
+        return "rejected";
+      case "offer sent":
+      case "تم إرسال العرض":
+        return "offerSent";
+      case "under review":
+      case "قيد المراجعة":
+        return "underReview";
+      case "inprogress":
+      case "قيد التنفيذ":
+      case "new":
+      case "جديد":
+        return "inProgress";
+      default:
+        return "inProgress";
+    }
   };
 
-  const onGridReady = (params: GridReadyEvent) => {
-    params.api.sizeColumnsToFit();
-  };
+  useEffect(() => {
+    const fetchNewOrders = async () => {
+      try {
+        const response = await enjazService.getOrders("translation", "new");
+        const mapped: RowData[] = response.data.map((order: any) => ({
+          requestId: `#${order.number}`,
+          client: order.client || "———",
+          service: order.service,
+          charCount: order.litternumber || "———",
+          status: mapStatus(order.status),
+          date: order.date || "———",
+          amount: order.cost,
+        }));
+        setRowData(mapped);
+      } catch (err) {
+        console.error("Failed to fetch new orders", err);
+        setError(t("error"));
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchNewOrders();
+  }, []);
+
+  if (loading) return <div>{t("loading")}</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div
-      className="ag-theme-alpine"
-      style={{
-        height: "auto",
-        width: "100%",
-      }}
-    >
+    <div className="ag-theme-alpine" style={{ height: "auto", width: "100%" }}>
       <AgGridReact
         rowData={rowData}
         columnDefs={columnDefs}
@@ -287,9 +245,12 @@ const NewOrdes: React.FC = () => {
         onGridReady={onGridReady}
         domLayout="autoHeight"
         headerHeight={44}
+        pagination={true}
+        paginationPageSize={5}
+        paginationPageSizeSelector={[5, 10, 20]}
       />
     </div>
   );
 };
 
-export default NewOrdes;
+export default NewOrders;

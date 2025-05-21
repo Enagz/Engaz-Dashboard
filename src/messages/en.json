@@ -1,0 +1,649 @@
+{
+  "header": {
+    "welcome": "Welcome, {name}",
+    "motivation": "Get ready to achieve more today",
+    "search": "Search..."
+  },
+  "sidebar": {
+    "home": "Home",
+    "customers": "Customers",
+    "employees": "Employees",
+    "orders": "Orders",
+    "costs": "Costs",
+    "privacy": "Privacy",
+    "chat": "Chat",
+    "logout": "Logout"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "viewAll": "View All",
+    "loading": "Loading...",
+    "noNotifications": "No notifications"
+  },
+  "login": {
+    "title": "Login to Dashboard",
+    "subtitle": "Welcome! Please log in to continue",
+    "emailLabel": "Email:",
+    "emailPlaceholder": "Enter your email",
+    "passwordLabel": "Password:",
+    "passwordPlaceholder": "Enter your password",
+    "submit": "Login",
+    "submitting": "Logging in...",
+    "error": "Login failed. Please check your credentials."
+  },
+  "home": {
+    "loading": "Loading...",
+    "error": "Failed to load statistics",
+    "unauthorized": "You are not authorized to view this page",
+    "overview": "Overview",
+    "viewAll": "View All",
+    "latestOrders": "Latest Orders",
+    "newOrders": "New Orders",
+    "urgentOrders": "Important Urgent Orders",
+    "stats": {
+      "totalOrders": "Total Orders",
+      "completedOrders": "Completed Orders",
+      "inProgressOrders": "Orders in Progress",
+      "revenue": "Revenue",
+      "receivedOrders": "Received Orders",
+      "avgCompletionTime": "Average Completion Time",
+      "ordersCountSuffix": "orders",
+      "currency": "SAR",
+      "hoursPerOrder": "hours per order"
+    }
+  },
+  "customers": {
+    "loading": "Loading data...",
+    "error": "An error occurred while loading customer statistics.",
+    "addCustomer": "Add Customer",
+    "statistics": "Customer Statistics",
+    "customerDetails": "Customer Details",
+    "bestPerformingCustomers": "Best Performing Customers",
+    "stats": {
+      "totalCustomers": "Total Customers",
+      "activeCustomers": "Active Customers",
+      "newCustomers": "New Customers",
+      "customerSatisfaction": "Customer Satisfaction",
+      "customerInteraction": "Customer Interaction Rate with Orders",
+      "customerSuffix": "customer",
+      "average": "Average Rating:",
+      "outOf5": "/ 5",
+      "noData": "No data"
+    }
+  },
+  "addCustomer": {
+    "breadcrumbCustomers": "Customers",
+    "breadcrumbAdd": "Add Customer",
+    "pageTitle": "Add New Customer",
+    "form": {
+      "name": "Name:",
+      "namePlaceholder": "Abdullah Mohammed Al-Salem",
+      "email": "Email:",
+      "emailPlaceholder": "abdllah@email.com",
+      "countryCode": "Country Code:",
+      "countryCodePlaceholder": "+966",
+      "phone": "Phone Number:",
+      "phonePlaceholder": "+966 55 123 4567",
+      "joinDate": "Join Date:",
+      "type": "Customer Type:",
+      "typeSelect": "Select Type",
+      "typeRepeated": "Repeated Customer",
+      "typeNew": "New Customer",
+      "submit": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "errorRequired": "This field is required",
+      "errorInvalidEmail": "Invalid email",
+      "errorInvalidPhone": "Phone number must be between 7 and 15 digits",
+      "errorInvalidCountryCode": "Invalid country code",
+      "successMessage": "Congratulations! Your customer has been added successfully.",
+      "addAnother": "Add Another Customer",
+      "continue": "Continue",
+      "generalError": "An error occurred while adding the customer"
+    }
+  },
+  "editCustomer": {
+    "breadcrumb": {
+      "customers": "Customers",
+      "editCustomer": "Edit Customer"
+    },
+    "title": "Edit Customer Info",
+    "loading": "Loading data...",
+    "error": {
+      "loadCustomer": "Failed to load customer data",
+      "updateFailed": "Failed to update customer data"
+    },
+    "success": "Congratulations! Customer information was successfully updated.",
+    "continue": "Continue",
+    "addNewCustomer": "Add New Customer"
+  },
+  "removeCustomer": {
+    "breadcrumb": {
+      "customers": "Customers",
+      "removeCustomer": "Remove Customer"
+    },
+    "title": "Remove Customer",
+    "loading": "Loading data...",
+    "error": {
+      "loadCustomer": "Failed to load customer data",
+      "deleteFailed": "Failed to delete customer"
+    },
+    "confirm": {
+      "title": "Are you sure you want to delete this customer?",
+      "description": "All customer data will be permanently removed and cannot be recovered. If you're sure, click \"Delete\"",
+      "delete": "Delete",
+      "cancel": "Cancel"
+    },
+    "success": "Customer was successfully deleted",
+    "continue": "Continue"
+  },
+  "customerDetails": {
+    "breadcrumbs": {
+      "customers": "Customers",
+      "details": "Customer Details"
+    },
+    "title": "Customer Details",
+    "loading": "Loading customer data...",
+    "errors": {
+      "fetchFailed": "Failed to load customer data, please try again later"
+    },
+    "statistics": {
+      "title": "Customer Statistics"
+    },
+    "orderHistory": {
+      "title": "Order History"
+    },
+    "form": {
+      "editButton": "Edit",
+      "removeButton": "Remove",
+      "labels": {
+        "name": "Name",
+        "countrycode": "Country Code",
+        "phone": "Phone Number",
+        "type": "Customer Type",
+        "email": "Email",
+        "joindate": "Joined Date"
+      },
+      "placeholders": {
+        "name": "Enter name",
+        "countrycode": "Country code",
+        "phone": "Phone number",
+        "type": "Select type",
+        "email": "Email address"
+      },
+      "types": {
+        "regular": "Regular Customer",
+        "new": "New Customer"
+      },
+      "errorRequired": "This field is required",
+      "errorInvalidEmail": "Invalid email",
+      "errorInvalidPhone": "Phone number must be between 7 and 15 digits",
+      "errorInvalidCountryCode": "Invalid country code",
+      "generalError": "An error occurred while adding the customer"
+    }
+  },
+  "employees": {
+    "pageTitle": "Employees",
+    "addEmployee": "Add Employee",
+    "statisticalSummary": "Statistical Summary of Employees",
+    "allEmployees": "All Employees",
+    "totalEmployees": "Total Employees",
+    "translationEmployees": "Translation Employees",
+    "printingEmployees": "Printing Employees",
+    "technicalSupportEmployees": "Technical Support Employees",
+    "employee": "employee",
+    "loading": "Loading...",
+    "table": {
+      "employeeName": "Employee Name",
+      "phoneNumber": "Phone Number",
+      "currentOrders": "Current Orders",
+      "actions": "Actions",
+      "order": "order",
+      "noEmployees": "No employees found",
+      "showing": "Showing",
+      "to": "to",
+      "of": "of",
+      "results": "results",
+      "previous": "Previous",
+      "next": "Next",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "translationDept": "Translation",
+      "printingDept": "Printing",
+      "technicalSupportDept": "Technical Support"
+    }
+  },
+  "addEmployee": {
+    "employees": "Employees",
+    "addEmployee": "Add Employee",
+    "addNewEmployee": "Add a New Employee",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "password": "Password",
+    "department": "Department",
+    "selectDepartment": "Select Department",
+    "translation": "Translation",
+    "printing": "Printing",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "generalError": "Failed to add employee",
+    "successMessage": "Congratulations! Your employee has been added successfully.",
+    "continue": "Continue",
+    "addAnother": "Add Another Employee",
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "invalidPhone": "Invalid phone number",
+    "passwordMin": "Password must be at least 8 characters",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "password": "Password",
+      "department": "Department",
+      "selectDepartment": "Select Department",
+      "translation": "Translation",
+      "printing": "Printing",
+      "save": "Save",
+      "edit": "edit",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "required": "This field is required",
+      "invalidEmail": "Invalid email address",
+      "invalidPhone": "Invalid phone number",
+      "passwordMin": "Password must be at least 8 characters"
+    }
+  },
+  "editEmployee": {
+    "breadcrumb": "Employees",
+    "breadcrumbAction": "Edit Employee",
+    "title": "Edit Details",
+    "loading": "Loading employee data...",
+    "fetchError": "Failed to load employee data",
+    "updateError": "Failed to update employee data",
+    "successMessage": "Congratulations! Employee details updated successfully.",
+    "continue": "Continue",
+    "cancel": "Cancel"
+  },
+  "removeEmployee": {
+    "breadcrumb": "Employees",
+    "breadcrumbAction": "Remove Employee",
+    "title": "Remove Employee",
+    "loading": "Loading employee data...",
+    "fetchError": "Failed to load employee data",
+    "removeError": "Failed to remove employee. Please try again later.",
+    "successMessage": "Congratulations! The employee was removed successfully.",
+    "continue": "Continue",
+    "confirm": {
+      "title": "Are you sure you want to remove this employee?",
+      "description": "All employee data will be permanently deleted and cannot be recovered. If you're sure, click 'Delete'.",
+      "delete": "Delete",
+      "cancel": "Cancel"
+    }
+  },
+  "employeeDetails": {
+    "title": "My Profile",
+    "monthlySummary": "Monthly Performance Summary",
+    "completedOrders": "Completed Orders:",
+    "taskTable": "Task Table",
+    "loading": "Loading employee data...",
+    "fetchError": "Failed to load employee data"
+  },
+  "servicesPrices": {
+    "loading": "Loading...",
+    "addNewService": "Add New Service",
+    "serviceCosts": "Service Costs",
+    "servicePrices": "Service Prices",
+    "previous": "Previous",
+    "next": "Next",
+    "tableHeaders": {
+      "service": "Service",
+      "pricePerWordPage": "Price per Word/Page",
+      "languagePrintType": "Language/Print Type",
+      "actions": "Actions"
+    },
+    "priceDisplay": "{price} SAR per word",
+    "serviceTypes": {
+      "translation": "Translation",
+      "colorPrinting": "Color Printing",
+      "coverPrinting": "Cover Printing"
+    }
+  },
+  "privacy": {
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms and Conditions",
+    "usagePolicy": "Usage Policy",
+    "edit": "Edit"
+  },
+  "chat": {
+    "allChats": "All Chats",
+    "orderChats": "Order Chats",
+    "supportChats": "Support Chats",
+    "newClient": "New Client",
+    "send": "Send",
+    "typeMessage": "Type your message here..."
+  },
+  "notificationsPage": {
+    "breadcrumbHome": "Home",
+    "breadcrumbNotifications": "Notifications",
+    "pageTitle": "Account Notifications",
+    "sectionTitle": "All Notifications",
+    "all": "All",
+    "read": "Read",
+    "unread": "Unread",
+    "loading": "Loading...",
+    "deleteAll": "Delete All Notifications",
+    "confirmDelete": {
+      "title": "Are you sure you want to delete all notifications?",
+      "description": "All data will be permanently deleted and cannot be recovered. If you're sure, click 'Delete'."
+    },
+    "successDelete": "Congratulations! Data deleted successfully",
+    "continue": "Continue"
+  },
+
+  "latestOrders": {
+    "requestId": "Request ID",
+    "client": "Client",
+    "service": "Service",
+    "status": "Status",
+    "date": "Date",
+    "employee": "Employee",
+    "actions": "Actions",
+    "now": "now",
+    "minutesAgo": "minutes ago",
+    "hoursAgo": "hours ago",
+    "daysAgo": "days ago",
+    "loading": "Loading orders...",
+    "error": "Failed to load orders",
+    "statusText": {
+      "completed": "Completed",
+      "rejected": "Rejected",
+      "offerSent": "Offer Sent",
+      "underReview": "Under Review",
+      "inProgress": "In Progress"
+    },
+    "unknown": "Unknown",
+    "unassigned": "Unassigned"
+  },
+  "newOrders": {
+    "requestId": "Order Number",
+    "client": "Client",
+    "service": "Service",
+    "status": "Status",
+    "date": "Date",
+    "amount": "Amount",
+    "actions": "Actions",
+    "completed": "Completed",
+    "rejected": "Rejected",
+    "offerSent": "Offer Sent",
+    "underReview": "Under Review",
+    "inProgress": "In Progress",
+    "sar": "SAR",
+    "loading": "Loading...",
+    "error": "Failed to load new orders"
+  },
+  "urgentOrders": {
+    "requestId": "Request ID",
+    "service": "Service",
+    "pageCount": "Page Count",
+    "client": "Client",
+    "deadline": "Deadline",
+    "status": "Status",
+    "amount": "Amount",
+    "actions": "Actions",
+    "translate": "Translation",
+    "print": "Printing",
+    "pages": "pages",
+    "within": "within {deadline}",
+    "completed": "Completed",
+    "rejected": "Rejected",
+    "offerSent": "Offer Sent",
+    "underReview": "Under Review",
+    "inProgress": "In Progress",
+    "executeNow": "Execute Now",
+    "loading": "Loading...",
+    "error": "Failed to load urgent orders"
+  },
+  "customerDetailsTable": {
+    "allCustomers": "All Customers",
+    "customerName": "Customer Name",
+    "phoneNumber": "Phone Number",
+    "orderCount": "Order Count",
+    "status": "Status",
+    "registrationDate": "Registration Date",
+    "lastActivity": "Last Activity",
+    "totalPayments": "Total Payments",
+    "actions": "Actions",
+    "active": "Active",
+    "inactive": "Inactive",
+    "orders": "orders",
+    "noOrders": "No orders",
+    "noActivity": "No activity",
+    "notAvailable": "Not available",
+    "noPayments": "No payments",
+    "sar": "SAR"
+  },
+  "bestCustomers": {
+    "rank": "Rank",
+    "clientName": "Client Name",
+    "phone": "Phone",
+    "orders": "Orders",
+    "registrationDate": "Registration Date",
+    "totalPayments": "Total Payments",
+    "rating": "Rating",
+    "loading": "Loading...",
+    "error": "Failed to load best customers.",
+    "first": "First",
+    "second": "Second",
+    "third": "Third",
+    "times": "{count} times",
+    "ordersCount": "{count} orders",
+    "currency": "{amount} SAR",
+    "none": "None"
+  },
+  "orderHistory": {
+    "title": "All Client Orders",
+    "tableHeaders": {
+      "requestId": "Order ID",
+      "orderDate": "Order Date",
+      "serviceType": "Service Type",
+      "status": "Order Status",
+      "totalPayments": "Total Payments",
+      "employee": "Employee",
+      "executionTime": "Execution Time",
+      "notes": "Additional Notes",
+      "actions": "Actions"
+    },
+    "status": {
+      "completed": "Completed",
+      "rejected": "Rejected",
+      "inProgress": "In Progress",
+      "underReview": "Under Review",
+      "unknown": "Unknown"
+    },
+    "actionTitles": {
+      "delete": "Delete Order",
+      "view": "View Order Details",
+      "edit": "Edit Order"
+    },
+    "placeholders": {
+      "notAvailable": "Not Available",
+      "notSpecified": "Not Specified",
+      "notAssigned": "Not Assigned",
+      "none": "None",
+      "notDecided": "Not Decided Yet"
+    }
+  },
+  "tasks": {
+    "taskNumber": "Task Number",
+    "task": "Task",
+    "language": "Language (From/To)",
+    "client": "Client Name",
+    "method": "Delivery Method",
+    "deliveryDate": "Delivery Date",
+    "status": "Task Status",
+    "comments": "Additional Notes",
+    "statuses": {
+      "finished": "Finished",
+      "cancelled": "Cancelled",
+      "inprogress": "In Progress",
+      "underreview": "Under Review"
+    }
+  },
+  "currentOrders": {
+    "requestId": "Request ID",
+    "customer": "Customer",
+    "lettersNumber": "Number of Letters",
+    "status": "Status",
+    "orderDate": "Order Date",
+    "amount": "Amount",
+    "employee": "Employee",
+    "actions": "Actions",
+    "completed": "Completed",
+    "rejected": "Rejected",
+    "offerSent": "Offer Sent",
+    "underReview": "Under Review",
+    "inProgress": "In Progress",
+    "currency": "SAR",
+    "lettersUnit": "letters",
+    "unassigned": "Unassigned",
+    "deleteConfirmTitle": "Are you sure you want to delete this order?",
+    "deleteConfirmDescription": "This order will be permanently deleted and cannot be recovered. If you're sure, click 'Delete'.",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "successMessage": "Congratulations! Order deleted successfully",
+    "continue": "Continue",
+    "loading": "Loading orders...",
+    "empty": "No orders found"
+  },
+  "orderDetails": {
+    "requestId": "Request ID",
+    "serviceType": "Service Type",
+    "papersNumber": "Number of Papers",
+    "status": "Status",
+    "amount": "Amount",
+    "deliveryMethod": "Delivery Method",
+    "employee": "Employee",
+    "statuses": {
+      "Finished": "Finished",
+      "Cancelled": "Cancelled",
+      "In Progress": "In Progress",
+      "Under Review": "Under Review",
+      "FinishedLabel": "Finished",
+      "CancelledLabel": "Cancelled",
+      "InProgressLabel": "In Progress",
+      "UnderReviewLabel": "Under Review"
+    },
+    "paperUnit": "papers",
+    "currency": "SAR"
+  },
+  "ordersPage": {
+    "orderStats": "Order Statistics",
+    "currentOrders": "Current Orders",
+    "translationOrders": "Translation Orders",
+    "printingOrders": "Printing Orders",
+    "new": "New",
+    "inprogress": "In Progress",
+    "finished": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "orderStatistics": {
+    "title": "Order Statistics",
+    "completed": "Completed",
+    "canceled": "Canceled",
+    "inprogress": "In progress",
+    "new": "New"
+  },
+  "servicesCompletion": {
+    "translation": "Translation",
+    "printing": "Printing",
+    "late": "Late Orders"
+  },
+  "orderDetailsPage": {
+    "breadcrumbOrders": "Orders",
+    "breadcrumbDetails": "Order Details",
+    "summary": "Order Summary",
+    "clientData": "Client Data",
+    "details": "Order Details",
+    "loading": "Loading...",
+    "error": "Failed to load order details"
+  },
+  "orderSummary": {
+    "number": "Order Number",
+    "client": "Client Name",
+    "status": "Order Status",
+    "date": "Creation Date",
+    "cost": "Total Amount",
+    "name": "Full Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "address": "Address"
+  },
+  "costsForm": {
+    "addTitle": "Add New Service",
+    "editTitle": "Edit Service",
+    "serviceType": "Service Type:",
+    "price": "Cost:",
+    "englishName": "English Name:",
+    "arabicName": "Arabic Name:",
+    "save": "Save",
+    "cancel": "Cancel",
+    "successAdd": "Congratulations! Service added successfully",
+    "successEdit": "Congratulations! Service updated successfully",
+    "continue": "Continue",
+    "serviceOptions": {
+      "language": "Translation",
+      "printing": "Printing",
+      "covering": "Covering"
+    },
+    "validation": {
+      "required": "This field is required"
+    }
+  },
+  "privacyForm": {
+    "title": {
+      "privacy": "Privacy Policy",
+      "conditions": "Terms and Conditions",
+      "usage": "Usage Policy"
+    },
+    "arabicLabel": "In Arabic:",
+    "englishLabel": "In English:",
+    "save": "Save",
+    "cancel": "Cancel",
+    "successMessage": "Congratulations! Successfully updated",
+    "continue": "Continue",
+    "close": "Close",
+    "errors": {
+      "typeRequired": "Type is required",
+      "invalidType": "Invalid type",
+      "arabicConditions": "Arabic condition is required",
+      "englishConditions": "English condition is required",
+      "arabicPrivacy": "Arabic privacy is required",
+      "englishPrivacy": "English privacy is required",
+      "arabicUsage": "Arabic usage is required",
+      "englishUsage": "English usage is required"
+    }
+  },
+  "ordersForm": {
+    "isRequired": "is required",
+    "editTitle": "Edit Order Information",
+    "numberofletters": "Number of Letters:",
+    "status": "Status:",
+    "cost": "Cost:",
+    "chooseStatus": "Select status",
+    "statusOptions": {
+      "under_review": "Under Review",
+      "offer_sent": "Offer Sent",
+      "in_progress": "In Progress",
+      "in_delivery": "In delivery",
+      "finished": "Finished",
+      "cancelled": "Cancelled"
+    },
+    "save": "Save",
+    "cancel": "Cancel",
+    "success": "Congratulations! Order updated successfully",
+    "continue": "Continue"
+  }
+}

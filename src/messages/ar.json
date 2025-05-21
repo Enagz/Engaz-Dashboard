@@ -1,0 +1,644 @@
+{
+  "header": {
+    "welcome": "مرحبًا بك، {name}",
+    "motivation": "استعد لتحقيق المزيد اليوم",
+    "search": "ابحث..."
+  },
+  "sidebar": {
+    "home": "الرئيسية",
+    "customers": "العملاء",
+    "employees": "الموظفين",
+    "orders": "الطلبات",
+    "costs": "التكاليف",
+    "privacy": "الخصوصية",
+    "chat": "المحادثات",
+    "logout": "خروج"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "viewAll": "مشاهدة الكل",
+    "loading": "جارى التحميل...",
+    "noNotifications": "لا توجد إشعارات"
+  },
+  "login": {
+    "title": "تسجيل الدخول إلى لوحة التحكم",
+    "subtitle": "مرحبا بك! قم بتسجيل الدخول للمتابعة",
+    "emailLabel": "البريد الإلكتروني:",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "passwordLabel": "كلمة المرور:",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "submit": "تسجيل الدخول",
+    "submitting": "جاري تسجيل الدخول...",
+    "error": "فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد."
+  },
+  "home": {
+    "loading": "جاري التحميل...",
+    "error": "فشل تحميل الإحصائيات",
+    "unauthorized": "غير مصرح لك بعرض هذه الصفحة",
+    "overview": "نظرة عامة",
+    "viewAll": "مشاهدة الكل",
+    "latestOrders": "آخر الطلبات الواردة",
+    "newOrders": "الطلبات الحديثة",
+    "urgentOrders": "أهم الطلبات العاجلة",
+    "stats": {
+      "totalOrders": "عدد الطلبات الكلية",
+      "completedOrders": "الطلبات المكتملة",
+      "inProgressOrders": "الطلبات قيد المعالجة",
+      "revenue": "الإيرادات",
+      "receivedOrders": "عدد الطلبات المستلمة",
+      "avgCompletionTime": "متوسط وقت الإنتهاء",
+      "ordersCountSuffix": "طلبا",
+      "currency": "ر.س",
+      "hoursPerOrder": "ساعة لكل طلب"
+    }
+  },
+  "customers": {
+    "loading": "جارٍ تحميل البيانات...",
+    "error": "حدث خطأ أثناء تحميل إحصائيات العملاء.",
+    "addCustomer": "إضافة عميل",
+    "statistics": "إحصائيات العملاء",
+    "customerDetails": "تفاصيل العملاء",
+    "bestPerformingCustomers": "أفضل العملاء أداءً",
+    "stats": {
+      "totalCustomers": "إجمالي العملاء",
+      "activeCustomers": "العملاء النشطون",
+      "newCustomers": "العملاء الجدد",
+      "customerSatisfaction": "معدل رضا العملاء",
+      "customerInteraction": "نسبة تفاعل العملاء مع الطلبات",
+      "customerSuffix": "عميل",
+      "average": "متوسط التقييم:",
+      "outOf5": "/ 5",
+      "noData": "لا يوجد"
+    }
+  },
+  "addCustomer": {
+    "breadcrumbCustomers": "العملاء",
+    "breadcrumbAdd": "إضافة عميل",
+    "pageTitle": "إضافة عميل جديد",
+    "form": {
+      "name": "الإسم :",
+      "namePlaceholder": "عبدالله محمد السالم",
+      "email": "البريد الإلكتروني :",
+      "emailPlaceholder": "abdllah@email.com",
+      "countryCode": "رمز الدولة :",
+      "countryCodePlaceholder": "+966",
+      "phone": "رقم الهاتف :",
+      "phonePlaceholder": "+966 55 123 4567",
+      "joinDate": "تاريخ الانضمام :",
+      "type": "نوع العميل :",
+      "typeSelect": "اختر النوع",
+      "typeRepeated": "عميل متكرر",
+      "typeNew": "عميل جديد",
+      "submit": "حفظ",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "errorRequired": "هذا الحقل مطلوب",
+      "errorInvalidEmail": "البريد غير صالح",
+      "errorInvalidPhone": "رقم الهاتف يجب أن يحتوي على ٧ إلى ١٥ رقمًا",
+      "errorInvalidCountryCode": "رمز الدولة غير صالح",
+      "successMessage": "تهانينا ! تم إضافة عميلك بنجاح",
+      "addAnother": "إضافة عميل جديد",
+      "continue": "متابعة",
+      "generalError": "حدث خطأ أثناء إضافة العميل"
+    }
+  },
+  "editCustomer": {
+    "breadcrumb": {
+      "customers": "العملاء",
+      "editCustomer": "تعديل بيانات العميل"
+    },
+    "title": "تعديل البيانات",
+    "loading": "جاري تحميل البيانات...",
+    "error": {
+      "loadCustomer": "تعذر تحميل بيانات العميل",
+      "updateFailed": "فشل تعديل بيانات العميل"
+    },
+    "success": "تهانينا ! تم تعديل بيانات العميل بنجاح",
+    "continue": "متابعة",
+    "addNewCustomer": "إضافة عميل جديد"
+  },
+  "removeCustomer": {
+    "breadcrumb": {
+      "customers": "العملاء",
+      "removeCustomer": "حذف العميل"
+    },
+    "title": "حذف العميل",
+    "loading": "جاري تحميل البيانات...",
+    "error": {
+      "loadCustomer": "تعذر تحميل بيانات العميل",
+      "deleteFailed": "تعذر حذف العميل"
+    },
+    "confirm": {
+      "title": "هل أنت متأكد من حذف هذا العميل؟",
+      "description": "سيتم إزالة جميع بيانات العميل نهائيًا، ولن يمكن استرجاعها. إذا كنت متأكدًا، اضغط على \"حذف\"",
+      "delete": "حذف",
+      "cancel": "إلغاء"
+    },
+    "success": "تم حذف العميل بنجاح",
+    "continue": "متابعة"
+  },
+  "customerDetails": {
+    "breadcrumbs": {
+      "customers": "العملاء",
+      "details": "تفاصيل العميل"
+    },
+    "title": "تفاصيل العميل",
+    "loading": "جاري تحميل بيانات العميل...",
+    "errors": {
+      "fetchFailed": "تعذر تحميل بيانات العميل، يرجى المحاولة لاحقاً"
+    },
+    "statistics": {
+      "title": "إحصائيات العميل"
+    },
+    "orderHistory": {
+      "title": "سجل الطلبات"
+    },
+    "form": {
+      "editButton": "تعديل",
+      "removeButton": "حذف",
+      "labels": {
+        "name": "الاسم",
+        "countrycode": "كود الدولة",
+        "phone": "رقم الهاتف",
+        "type": "نوع العميل",
+        "email": "البريد الإلكتروني",
+        "joindate": "تاريخ الانضمام"
+      },
+      "placeholders": {
+        "name": "أدخل الاسم",
+        "countrycode": "كود الدولة",
+        "phone": "رقم الهاتف",
+        "type": "اختر النوع",
+        "email": "البريد الإلكتروني"
+      },
+      "types": {
+        "regular": "عميل متكرر",
+        "new": "عميل جديد"
+      }
+    }
+  },
+  "employees": {
+    "pageTitle": "الموظفين",
+    "addEmployee": "إضافة موظف",
+    "statisticalSummary": "الملخص الإحصائي للموظفين",
+    "allEmployees": "كل الموظفين",
+    "totalEmployees": "عدد الموظفين الكلي",
+    "translationEmployees": "موظفو الترجمة",
+    "printingEmployees": "موظفو الطباعة",
+    "technicalSupportEmployees": "موظفو الدعم الفني",
+    "employee": "موظف",
+    "loading": "جاري التحميل...",
+    "table": {
+      "employeeName": "اسم الموظف",
+      "phoneNumber": "رقم الهاتف",
+      "currentOrders": "الطلبات الحالية",
+      "actions": "الإجراءات",
+      "order": "طلب",
+      "noEmployees": "لا يوجد موظفين",
+      "showing": "عرض",
+      "to": "إلى",
+      "of": "من",
+      "results": "النتائج",
+      "previous": "السابق",
+      "next": "التالي",
+      "view": "عرض",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "translationDept": "موظف ترجمة",
+      "printingDept": "موظف طباعة",
+      "technicalSupportDept": "موظف دعم فني"
+    }
+  },
+  "addEmployee": {
+    "employees": "ألموظفون",
+    "addEmployee": "إضافة موظف",
+    "addNewEmployee": "إضافة موظف جديد",
+    "name": "الإسم",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "password": "كلمة المرور",
+    "department": "القسم",
+    "selectDepartment": "اختر القسم",
+    "translation": "الترجمة",
+    "printing": "الطباعة",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "generalError": "تعذر إضافة الموظف",
+    "successMessage": "تهانينا ! تم إضافة موظفك بنجاح",
+    "continue": "متابعة",
+    "addAnother": "إضافة موظف جديد",
+    "required": "هذا الحقل مطلوب",
+    "invalidEmail": "البريد غير صالح",
+    "invalidPhone": "رقم غير صالح",
+    "passwordMin": "يجب أن تكون كلمة المرور على الأقل 8 أحرف",
+    "form": {
+      "name": "الإسم",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "password": "كلمة المرور",
+      "department": "القسم",
+      "selectDepartment": "اختر القسم",
+      "translation": "الترجمة",
+      "printing": "الطباعة",
+      "save": "حفظ",
+      "edit": "تعديل",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "required": "هذا الحقل مطلوب",
+      "invalidEmail": "البريد غير صالح",
+      "invalidPhone": "رقم غير صالح",
+      "passwordMin": "يجب أن تكون كلمة المرور على الأقل 8 أحرف"
+    }
+  },
+  "editEmployee": {
+    "breadcrumb": "ألموظفون",
+    "breadcrumbAction": "تعديل بيانات الموظف",
+    "title": "تعديل البيانات",
+    "loading": "جاري تحميل البيانات...",
+    "fetchError": "تعذر تحميل بيانات الموظف",
+    "updateError": "تعذر تعديل بيانات الموظف",
+    "successMessage": "تهانينا ! تم تعديل بيانات الموظف بنجاح",
+    "continue": "متابعة",
+    "cancel": "إلغاء"
+  },
+  "removeEmployee": {
+    "breadcrumb": "ألموظفون",
+    "breadcrumbAction": "حذف الموظف",
+    "title": "حذف الموظف",
+    "loading": "جاري تحميل البيانات...",
+    "fetchError": "تعذر تحميل بيانات الموظف",
+    "removeError": "تعذر حذف الموظف. الرجاء المحاولة لاحقًا.",
+    "successMessage": "تهانينا ! تم حذف الموظف بنجاح",
+    "continue": "متابعة",
+    "confirm": {
+      "title": "هل أنت متأكد من حذف هذا الموظف؟",
+      "description": "سيتم إزالة جميع بيانات الموظف نهائيًا، ولن يمكن استرجاعها. إذا كنت متأكدًا، اضغط على \"حذف\"",
+      "delete": "حذف",
+      "cancel": "إلغاء"
+    }
+  },
+  "employeeDetails": {
+    "title": "ملفي الشخصي",
+    "monthlySummary": "ملخص الأداء الشهري",
+    "completedOrders": "عدد الطلبات المنجزة :",
+    "taskTable": "جدول المهمات",
+    "loading": "جاري تحميل البيانات...",
+    "fetchError": "تعذر تحميل بيانات الموظف"
+  },
+  "servicesPrices": {
+    "loading": "جاري التحميل...",
+    "addNewService": "إضافة خدمة جديدة",
+    "serviceCosts": "تكاليف الخدمات",
+    "servicePrices": "أسعار الخدمات",
+    "previous": "السابق",
+    "next": "التالي",
+    "tableHeaders": {
+      "service": "الخدمة",
+      "pricePerWordPage": "السعر لكل كلمة/صفحة",
+      "languagePrintType": "اللغة/نوع الطباعة",
+      "actions": "الإجراءات"
+    },
+    "priceDisplay": "{price} ر.س لكل كلمة",
+    "serviceTypes": {
+      "translation": "ترجمة",
+      "colorPrinting": "طباعة ألوان",
+      "coverPrinting": "طباعة الغلاف"
+    }
+  },
+  "privacy": {
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsConditions": "الشروط والأحكام",
+    "usagePolicy": "سياسة الاستخدام",
+    "edit": "تعديل"
+  },
+  "chat": {
+    "allChats": "كل المحادثات",
+    "orderChats": "محادثات الطلبات",
+    "supportChats": "محادثات الدعم",
+    "newClient": "عميل جديد",
+    "send": "إرسال",
+    "typeMessage": "اكتب رسالتك هنا..."
+  },
+  "notificationsPage": {
+    "breadcrumbHome": "الرئيسية",
+    "breadcrumbNotifications": "الإشعارات",
+    "pageTitle": "إشعارات الحساب",
+    "sectionTitle": "كل الإشعارات",
+    "all": "الكل",
+    "read": "المقروءة",
+    "unread": "الغير مقروءة",
+    "loading": "جاري التحميل...",
+    "deleteAll": "مسح جميع الإشعارات",
+    "confirmDelete": {
+      "title": "هل أنت متأكد من مسح جميع الإشعارات؟",
+      "description": "سيتم إزالة جميع البيانات نهائيًا، ولن يمكن استرجاعها. إذا كنت متأكدًا، اضغط على \"حذف\""
+    },
+    "successDelete": "تهانينا ! تم حذف البيانات بنجاح",
+    "continue": "متابعة"
+  },
+
+  "latestOrders": {
+    "requestId": "رقم الطلب",
+    "client": "العميل",
+    "service": "الخدمة",
+    "status": "الحالة",
+    "date": "التاريخ",
+    "employee": "الموظف",
+    "actions": "الإجراءات",
+    "now": "الآن",
+    "minutesAgo": "قبل {count} دقيقة",
+    "hoursAgo": "قبل {count} ساعة",
+    "daysAgo": "قبل {count} يوم",
+    "loading": "جارٍ تحميل الطلبات...",
+    "error": "فشل تحميل الطلبات",
+    "statusText": {
+      "completed": "مكتمل",
+      "rejected": "مرفوض",
+      "offerSent": "تم إرسال العرض",
+      "underReview": "قيد المراجعة",
+      "inProgress": "قيد المعالجة"
+    },
+    "unknown": "غير معروف",
+    "unassigned": "غير مخصص"
+  },
+  "newOrders": {
+    "requestId": "رقم الطلب",
+    "client": "العميل",
+    "service": "الخدمة",
+    "status": "الحالة",
+    "date": "التاريخ",
+    "amount": "المبلغ",
+    "actions": "الإجراءات",
+    "completed": "مكتمل",
+    "rejected": "مرفوض",
+    "offerSent": "تم إرسال العرض",
+    "underReview": "قيد المراجعة",
+    "inProgress": "قيد المعالجة",
+    "sar": "ر.س",
+    "loading": "جاري التحميل...",
+    "error": "فشل تحميل الطلبات الجديدة"
+  },
+  "urgentOrders": {
+    "requestId": "رقم الطلب",
+    "service": "الخدمة",
+    "pageCount": "عدد الصفحات",
+    "client": "العميل",
+    "deadline": "الموعد النهائي",
+    "status": "الحالة",
+    "amount": "المبلغ",
+    "actions": "الإجراء",
+    "translate": "ترجمة",
+    "print": "طباعة",
+    "pages": "صفحة",
+    "within": "خلال {deadline}",
+    "completed": "مكتمل",
+    "rejected": "مرفوض",
+    "offerSent": "تم إرسال العرض",
+    "underReview": "قيد المراجعة",
+    "inProgress": "قيد المعالجة",
+    "executeNow": "تنفيذ الآن",
+    "loading": "جاري التحميل...",
+    "error": "فشل تحميل الطلبات العاجلة"
+  },
+  "customerDetailsTable": {
+    "allCustomers": "كل العملاء",
+    "customerName": "اسم العميل",
+    "phoneNumber": "رقم الهاتف",
+    "orderCount": "عدد الطلبات",
+    "status": "حالة العميل",
+    "registrationDate": "تاريخ التسجيل",
+    "lastActivity": "آخر نشاط",
+    "totalPayments": "إجمالي المدفوعات",
+    "actions": "الإجراءات",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "orders": "طلب",
+    "noOrders": "لا يوجد",
+    "noActivity": "لا يوجد",
+    "notAvailable": "غير متوفر",
+    "noPayments": "لا يوجد",
+    "sar": "ر.س"
+  },
+  "bestCustomers": {
+    "rank": "الترتيب",
+    "clientName": "اسم العميل",
+    "phone": "رقم الهاتف",
+    "orders": "عدد الطلبات",
+    "registrationDate": "تاريخ التسجيل",
+    "totalPayments": "إجمالي المدفوعات",
+    "rating": "التقييم",
+    "loading": "جاري التحميل...",
+    "error": "فشل تحميل أفضل العملاء",
+    "first": "الأول",
+    "second": "الثاني",
+    "third": "الثالث",
+    "times": "{count} مرات",
+    "ordersCount": "{count} طلب",
+    "currency": "{amount} ر.س",
+    "none": "لا يوجد"
+  },
+  "orderHistory": {
+    "title": "كل الطلبات للعميل",
+    "tableHeaders": {
+      "requestId": "رقم الطلب",
+      "orderDate": "تاريخ الطلب",
+      "serviceType": "نوع الخدمة",
+      "status": "حالة الطلب",
+      "totalPayments": "إجمالي المدفوعات",
+      "employee": "الموظف",
+      "executionTime": "مدة التنفيذ",
+      "notes": "ملاحظات إضافية",
+      "actions": "الإجراءات"
+    },
+    "status": {
+      "completed": "مكتمل",
+      "rejected": "مرفوض",
+      "inProgress": "قيد المعالجة",
+      "underReview": "قيد المراجعة",
+      "unknown": "غير معروف"
+    },
+    "actionTitles": {
+      "delete": "حذف الطلب",
+      "view": "عرض تفاصيل الطلب",
+      "edit": "تعديل الطلب"
+    },
+    "placeholders": {
+      "notAvailable": "غير متوفر",
+      "notSpecified": "غير محدد",
+      "notAssigned": "غير معين",
+      "none": "لا يوجد",
+      "notDecided": "لم يحدد بعد"
+    }
+  },
+  "tasks": {
+    "taskNumber": "رقم الطلب",
+    "task": "المهمة",
+    "language": "اللغة (من/إلى)",
+    "client": "اسم العميل",
+    "method": "طريقة الاستلام",
+    "deliveryDate": "تاريخ التسليم",
+    "status": "حالة المهمة",
+    "comments": "ملاحظات إضافية",
+    "statuses": {
+      "finished": "مكتمل",
+      "cancelled": "مرفوض",
+      "inprogress": "قيد المعالجة",
+      "underreview": "قيد المراجعة"
+    }
+  },
+  "currentOrders": {
+    "requestId": "رقم الطلب",
+    "customer": "العميل",
+    "lettersNumber": "عدد الأحرف",
+    "status": "الحالة",
+    "orderDate": "ألتاريخ",
+    "amount": "المبلغ",
+    "employee": "الموظف",
+    "actions": "الإجراءات",
+    "completed": "مكتمل",
+    "rejected": "مرفوض",
+    "offerSent": "تم إرسال العرض",
+    "underReview": "قيد المراجعة",
+    "inProgress": "قيد المعالجة",
+    "currency": "ر.س",
+    "lettersUnit": "حرف",
+    "unassigned": "غير معين",
+    "deleteConfirmTitle": "هل أنت متأكد من حذف هذا الطلب؟",
+    "deleteConfirmDescription": "سيتم إزالة جميع بيانات الطلب نهائيًا، ولن يمكن استرجاعها. إذا كنت متأكدًا، اضغط على \"حذف\"",
+    "delete": "حذف",
+    "cancel": "إلغاء",
+    "successMessage": "تهانينا ! تم حذف الطلب بنجاح",
+    "continue": "متابعة",
+    "loading": "جاري تحميل الطلبات...",
+    "empty": "لا يوجد طلبات"
+  },
+  "orderDetails": {
+    "requestId": "رقم الطلب",
+    "serviceType": "نوع الخدمة",
+    "papersNumber": "عدد الأوراق",
+    "status": "الحالة",
+    "amount": "المبلغ",
+    "deliveryMethod": "طريقة التسليم",
+    "employee": "الموظف",
+    "statuses": {
+      "Finished": "مكتمل",
+      "Cancelled": "مرفوض",
+      "In Progress": "قيد المعالجة",
+      "Under Review": "قيد المراجعة",
+      "FinishedLabel": "مكتمل",
+      "CancelledLabel": "مرفوض",
+      "InProgressLabel": "قيد المعالجة",
+      "UnderReviewLabel": "قيد المراجعة"
+    },
+    "paperUnit": "ورقة",
+    "currency": "ر.س"
+  },
+  "ordersPage": {
+    "orderStats": "إحصائيات الطلبات",
+    "currentOrders": "الطلبات الحالية",
+    "translationOrders": "طلبات الترجمة",
+    "printingOrders": "طلبات الطباعة",
+    "new": "جديد",
+    "inprogress": "قيد التنفيذ",
+    "finished": "مكتمل",
+    "cancelled": "ملغي"
+  },
+  "orderStatistics": {
+    "title": "إحصائيات الطلبات",
+    "completed": "المكتملة",
+    "canceled": "الملغاة",
+    "inprogress": "قيد التنفيذ",
+    "new": "الجديدة"
+  },
+  "servicesCompletion": {
+    "translation": "الترجمة",
+    "printing": "الطباعة",
+    "late": "الطلبات المتأخرة"
+  },
+  "orderDetailsPage": {
+    "breadcrumbOrders": "الطلبات",
+    "breadcrumbDetails": "تفاصيل الطلب",
+    "summary": "ملخص الطلب",
+    "clientData": "بيانات العميل",
+    "details": "تفاصيل الطلب",
+    "loading": "جاري التحميل...",
+    "error": "فشل في تحميل تفاصيل الطلب"
+  },
+  "orderSummary": {
+    "number": "رقم الطلب",
+    "client": "إسم العميل",
+    "status": "حالة الطلب",
+    "date": "تاريخ الإنشاء",
+    "cost": "الإجمالي الكلي",
+    "name": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "address": "العنوان"
+  },
+  "costsForm": {
+    "addTitle": "إضافة خدمة جديدة",
+    "editTitle": "تعديل الخدمة",
+    "serviceType": "نوع الخدمة :",
+    "price": "السعر :",
+    "englishName": "الاسم بالإنجليزية:",
+    "arabicName": "الاسم بالعربية:",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "successAdd": "تهانينا ! تم إضافة الخدمة بنجاح",
+    "successEdit": "تهانينا ! تم تعديل الخدمة بنجاح",
+    "continue": "متابعة",
+    "serviceOptions": {
+      "language": "ترجمة",
+      "printing": "طباعة",
+      "covering": "تغليف"
+    },
+    "validation": {
+      "required": "هذا الحقل مطلوب"
+    }
+  },
+  "privacyForm": {
+    "title": {
+      "privacy": "سياسة الخصوصية",
+      "conditions": "الشروط والأحكام",
+      "usage": "سياسة الاستخدام"
+    },
+    "arabicLabel": "بالعربية :",
+    "englishLabel": "بالانجليزية :",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "successMessage": "تهانينا ! تم التعديل بنجاح",
+    "continue": "متابعة",
+    "close": "إلغاء",
+    "errors": {
+      "typeRequired": "النوع مطلوب",
+      "invalidType": "نوع غير صالح",
+      "arabicConditions": "الشرط العربي مطلوب",
+      "englishConditions": "English condition is required",
+      "arabicPrivacy": "الخصوصية العربية مطلوبة",
+      "englishPrivacy": "English privacy is required",
+      "arabicUsage": "الاستخدام العربي مطلوب",
+      "englishUsage": "English usage is required"
+    }
+  },
+  "ordersForm": {
+    "isRequired": "مطلوب",
+    "editTitle": "تعديل بيانات الطلب",
+    "numberofletters": "عدد الأحرف :",
+    "status": "الحالة :",
+    "cost": "التكلفة :",
+    "chooseStatus": "اختر الحالة",
+    "statusOptions": {
+      "under_review": "قيد المراجعة",
+      "offer_sent": "تم إرسال العرض",
+      "in_progress": "قيد التنفيذ",
+      "in_delivery": "قيد التوصيل",
+      "finished": "منتهي",
+      "cancelled": "ملغي"
+    },
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "success": "تهانينا ! تم تعديل بيانات العميل بنجاح",
+    "continue": "متابعة"
+  }
+}

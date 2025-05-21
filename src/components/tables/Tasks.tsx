@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
+import { useTranslations } from "next-intl";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -11,35 +14,37 @@ interface RowData {
   task: string;
   language: string;
   method: string;
-  status: "completed" | "inProgress";
-  startDate: string;
+  status: "Finished" | "In Progress" | "Under Review" | "Cancelled";
   deliveryDate: string;
   comments: string;
 }
 
-// Custom cell renderer for status column
 const StatusCellRenderer = (props: any) => {
+  const t = useTranslations("tasks.statuses");
   const status = props.value;
+
   let color = "";
   let background = "";
-  let text = "";
   let icon = "•";
 
-  if (status === "completed") {
+  let text = t(status.toLowerCase().replace(" ", "") as keyof typeof t);
+
+  if (status === "Finished") {
     color = "var(--color-green-color)";
     background = "var(--color-green-hover)";
-    text = "مكتملة";
-  } else if (status === "inProgress") {
+  } else if (status === "Cancelled") {
+    color = "var(--color-red-color)";
+    background = "var(--color-red-hover)";
+  } else if (status === "In Progress" || status === "Under Review") {
     color = "var(--color-yellow-color)";
     background = "var(--color-yellow-hover)";
-    text = "قيد المعالجة";
   }
 
   return (
     <div dir="rtl" className="flex h-full items-center justify-center">
       <div
         className="font-bold flex items-center gap-1 px-2 py-3 h-0 rounded-full"
-        style={{ background, color: color }}
+        style={{ background, color }}
       >
         <span className="text-lg mr-1">{icon}</span>
         {text}
@@ -48,46 +53,12 @@ const StatusCellRenderer = (props: any) => {
   );
 };
 
-const Tasks: React.FC = () => {
-  const [rowData] = useState<RowData[]>([
-    {
-      taskNumber: "001",
-      client: "أحمد الزهراني",
-      task: "ترجمة تقرير",
-      language: "عربي/إنجليزي",
-      method: "موقع الشركة",
-      status: "completed",
-      startDate: "2025-03-29",
-      deliveryDate: "2025-04-02",
-      comments: "لا توجد ملاحظات",
-    },
-    {
-      taskNumber: "002",
-      client: "خالد السعيد",
-      task: "ترجمة مستندات",
-      language: "إنجليزي/فرنسي",
-      method: "دليفري",
-      status: "completed",
-      startDate: "2025-03-28",
-      deliveryDate: "2025-04-01",
-      comments: "تم التسليم بنجاح",
-    },
-    {
-      taskNumber: "003",
-      client: "ماجد العتيبي",
-      task: "ترجمة مقالة",
-      language: "فرنسي/عربي",
-      method: "موقع الشركة",
-      status: "inProgress",
-      startDate: "2025-03-27",
-      deliveryDate: "2025-03-30",
-      comments: "بحاجة إلى مراجعة",
-    },
-  ]);
+const Tasks = ({ rowData }: { rowData: RowData[] }) => {
+  const t = useTranslations("tasks");
 
   const [columnDefs] = useState<ColDef[]>([
     {
-      headerName: "رقم الطلب",
+      headerName: t("taskNumber"),
       field: "taskNumber",
       minWidth: 100,
       cellStyle: {
@@ -96,15 +67,9 @@ const Tasks: React.FC = () => {
         fontWeight: "500",
         fontSize: ".875rem",
       },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
     },
     {
-      headerName: "المهمة",
+      headerName: t("task"),
       field: "task",
       minWidth: 100,
       cellStyle: {
@@ -113,15 +78,9 @@ const Tasks: React.FC = () => {
         fontWeight: "500",
         fontSize: ".875rem",
       },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
     },
     {
-      headerName: "اللغة (من/إلى)",
+      headerName: t("language"),
       field: "language",
       minWidth: 120,
       cellStyle: {
@@ -130,15 +89,9 @@ const Tasks: React.FC = () => {
         fontWeight: "500",
         fontSize: ".875rem",
       },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
     },
     {
-      headerName: "اسم العميل",
+      headerName: t("client"),
       field: "client",
       minWidth: 140,
       cellStyle: {
@@ -147,15 +100,9 @@ const Tasks: React.FC = () => {
         fontWeight: "500",
         fontSize: ".875rem",
       },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
     },
     {
-      headerName: "طريقة الاستلام",
+      headerName: t("method"),
       field: "method",
       minWidth: 140,
       cellStyle: {
@@ -164,32 +111,9 @@ const Tasks: React.FC = () => {
         fontWeight: "500",
         fontSize: ".875rem",
       },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
     },
     {
-      headerName: "تاريخ البدء",
-      field: "startDate",
-      minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "تاريخ التسليم",
+      headerName: t("deliveryDate"),
       field: "deliveryDate",
       minWidth: 100,
       cellStyle: {
@@ -198,32 +122,16 @@ const Tasks: React.FC = () => {
         fontWeight: "500",
         fontSize: ".875rem",
       },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
     },
     {
-      headerName: "حالة المهمة",
+      headerName: t("status"),
       field: "status",
       minWidth: 120,
       cellRenderer: StatusCellRenderer,
-      cellStyle: {
-        fontSize: ".75rem",
-        textAlign: "center",
-        fontWeight: "600",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
+      cellStyle: { fontSize: ".75rem", textAlign: "center", fontWeight: "600" },
     },
     {
-      headerName: "ملاحظات إضافية",
+      headerName: t("comments"),
       field: "comments",
       minWidth: 100,
       cellStyle: {
@@ -231,12 +139,6 @@ const Tasks: React.FC = () => {
         color: "var(--color-text-normal)",
         fontWeight: "500",
         fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
       },
     },
   ]);
@@ -252,13 +154,7 @@ const Tasks: React.FC = () => {
   };
 
   return (
-    <div
-      className="ag-theme-alpine"
-      style={{
-        height: "auto",
-        width: "100%",
-      }}
-    >
+    <div className="ag-theme-alpine" style={{ height: "auto", width: "100%" }}>
       <AgGridReact
         rowData={rowData}
         columnDefs={columnDefs}

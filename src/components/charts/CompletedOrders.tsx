@@ -9,7 +9,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [{ month: "oreders", completed: 56, incompleted: 9 }];
+// const chartData = [{ completed: 56, incompleted: 9 }];
 
 const chartConfig = {
   completed: {
@@ -22,7 +22,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function CompletedOrders() {
+export default function CompletedOrders({
+  chartData,
+}: {
+  chartData: { completed: number; incompleted: number }[];
+}) {
   const totalVisitors = chartData[0].completed + chartData[0].incompleted;
 
   return (

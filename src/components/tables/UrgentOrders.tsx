@@ -1,47 +1,57 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
+import { useTranslations } from "next-intl";
+
+import { enjazService } from "@/services/enjazService";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-interface RowData {
-  requestId: string;
-  service: string;
-  pageCount: string;
-  client: string;
-  deadline: string;
-  status: "late" | "inProgress" | "veryLate";
-  amount: string;
-}
-
-// Custom cell renderer for status column
 const StatusCellRenderer = (props: any) => {
+  const t = useTranslations("urgentOrders");
   const status = props.value;
+
   let color = "";
   let background = "";
   let text = "";
   let icon = "•";
 
-  if (status === "late") {
-    color = "var(--color-red-color)";
-    background = "var(--color-red-hover)";
-    text = "متأخر";
-  } else if (status === "veryLate") {
-    color = "var(--color-red-color)";
-    background = "var(--color-red-hover)";
-    text = "متأخر جدا";
-  } else if (status === "inProgress") {
-    color = "var(--color-yellow-color)";
-    background = "var(--color-yellow-hover)";
-    text = "قيد المعالجة";
+  switch (status) {
+    case "completed":
+      color = "var(--color-green-color)";
+      background = "var(--color-green-hover)";
+      text = t("completed");
+      break;
+    case "rejected":
+      color = "var(--color-red-color)";
+      background = "var(--color-red-hover)";
+      text = t("rejected");
+      break;
+    case "offerSent":
+      color = "var(--color-blue-color)";
+      background = "var(--color-blue-hover)";
+      text = t("offerSent");
+      break;
+    case "underReview":
+      color = "var(--color-purple-color)";
+      background = "var(--color-purple-hover)";
+      text = t("underReview");
+      break;
+    case "inProgress":
+    default:
+      color = "var(--color-yellow-color)";
+      background = "var(--color-yellow-hover)";
+      text = t("inProgress");
   }
 
   return (
     <div dir="rtl" className="flex h-full items-center justify-center">
       <div
         className="font-bold flex items-center gap-1 px-2 py-3 h-0 rounded-full"
-        style={{ background, color: color }}
+        style={{ background, color }}
       >
         <span className="text-lg mr-1">{icon}</span>
         {text}
@@ -50,194 +60,42 @@ const StatusCellRenderer = (props: any) => {
   );
 };
 
-// Custom cell renderer for action buttons
 const ActionsCellRenderer = () => {
+  const t = useTranslations("urgentOrders");
+
   return (
     <div className="h-full flex justify-center items-center">
       <button className="cursor-pointer bg-primary-color text-white rounded px-4 py-2 text-sm">
-        تنفيذ الآن
+        {t("executeNow")}
       </button>
     </div>
   );
 };
 
 const UrgentOrders: React.FC = () => {
-  const [rowData] = useState<RowData[]>([
-    {
-      requestId: "#12345",
-      service: "طباعة",
-      pageCount: "30 نسخة",
-      client: "أحمد الزهراني",
-      deadline: "خلال 3 ساعات",
-      status: "late",
-      amount: "500 ر.س",
-    },
-    {
-      requestId: "#12346",
-      service: "ترجمة",
-      pageCount: "15 صفحة",
-      client: "خالد السعيد",
-      deadline: "خلال 5 ساعات",
-      status: "inProgress",
-      amount: "750 ر.س",
-    },
-    {
-      requestId: "#12347",
-      service: "طباعة",
-      pageCount: "45 نسخة",
-      client: "ماجد العتيبي",
-      deadline: "خلال ساعتين",
-      status: "veryLate",
-      amount: "300 ر.س",
-    },
-    {
-      requestId: "#12348",
-      service: "ترجمة",
-      pageCount: "30 صفحة",
-      client: "فهد الدوسري",
-      deadline: "غدا - 10 صباحا",
-      status: "inProgress",
-      amount: "950 ر.س",
-    },
-  ]);
+  const t = useTranslations("urgentOrders");
+  const [rowData, setRowData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [columnDefs] = useState<ColDef[]>([
+    { headerName: t("requestId"), field: "requestId", minWidth: 100 },
+    { headerName: t("service"), field: "service", minWidth: 100 },
+    { headerName: t("pageCount"), field: "pageCount", minWidth: 120 },
+    { headerName: t("client"), field: "client", minWidth: 140 },
+    { headerName: t("deadline"), field: "deadline", minWidth: 140 },
     {
-      headerName: "رقم الطلب",
-      field: "requestId",
-      minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "الخدمة",
-      field: "service",
-      minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "عدد الصفحات",
-      field: "pageCount",
-      minWidth: 120,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "العميل",
-      field: "client",
-      minWidth: 140,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "الموعد النهائي",
-      field: "deadline",
-      minWidth: 140,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "الحالة",
+      headerName: t("status"),
       field: "status",
       minWidth: 120,
       cellRenderer: StatusCellRenderer,
-      cellStyle: {
-        fontSize: ".75rem",
-        textAlign: "center",
-        fontWeight: "600",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
     },
+    { headerName: t("amount"), field: "amount", minWidth: 100 },
     {
-      headerName: "المبلغ",
-      field: "amount",
-      minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
-    },
-    {
-      headerName: "الإجراء",
+      headerName: t("actions"),
       field: "actions",
       minWidth: 120,
       cellRenderer: ActionsCellRenderer,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontWeight: "500",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        fontSize: ".75rem",
-        fontWeight: 600,
-        backgroundColor: "var(--color-table-border)",
-        color: "#000",
-      },
     },
   ]);
 
@@ -245,20 +103,80 @@ const UrgentOrders: React.FC = () => {
     sortable: true,
     filter: true,
     resizable: true,
+    cellStyle: {
+      textAlign: "center",
+      color: "var(--color-text-normal)",
+      fontWeight: "500",
+      fontSize: ".875rem",
+    },
+    headerStyle: {
+      fontSize: ".75rem",
+      fontWeight: 600,
+      backgroundColor: "var(--color-table-border)",
+      color: "#000",
+    },
   };
 
   const onGridReady = (params: GridReadyEvent) => {
     params.api.sizeColumnsToFit();
   };
 
+  const mapStatus = (status: string) => {
+    const normalizedStatus = status.toLowerCase().trim();
+    switch (normalizedStatus) {
+      case "finished":
+      case "مكتمل":
+        return "completed";
+      case "cancelled":
+      case "ملغي":
+        return "rejected";
+      case "offer sent":
+      case "تم إرسال العرض":
+        return "offerSent";
+      case "under review":
+      case "قيد المراجعة":
+        return "underReview";
+      case "inprogress":
+      case "قيد التنفيذ":
+      case "new":
+      case "جديد":
+      default:
+        return "inProgress";
+    }
+  };
+
+  useEffect(() => {
+    const fetchUrgentOrders = async () => {
+      try {
+        const response = await enjazService.getUrgentOrders();
+
+        const mappedData = response.data.map((order: any) => ({
+          requestId: `#${order.number}`,
+          service: order.type === "translation" ? t("translate") : t("print"),
+          pageCount: `${order.numberofletters} ${t("pages")}`,
+          client: order.client,
+          deadline: t("within", { deadline: order.deadline }),
+          status: mapStatus(order.status),
+          amount: `${order.cost} ر.س`,
+        }));
+
+        setRowData(mappedData);
+      } catch (err) {
+        console.error("Failed to fetch urgent orders", err);
+        setError(t("error"));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUrgentOrders();
+  }, [t]);
+
+  if (loading) return <div>{t("loading")}</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
+
   return (
-    <div
-      className="ag-theme-alpine"
-      style={{
-        height: "auto",
-        width: "100%",
-      }}
-    >
+    <div className="ag-theme-alpine" style={{ height: "auto", width: "100%" }}>
       <AgGridReact
         rowData={rowData}
         columnDefs={columnDefs}

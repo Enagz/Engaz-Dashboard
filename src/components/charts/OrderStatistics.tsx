@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Cell, Label, Pie, PieChart } from "recharts";
+import { useTranslations, useLocale } from "next-intl";
 
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -10,63 +12,85 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { enjazService } from "@/services/enjazService";
 
-const desktopData = [
-  { name: "completed", value: 45, fill: "#27AE60" },
-  { name: "new", value: 25, fill: "#3498DB" },
-  { name: "inprogress", value: 20, fill: "#F39C12" },
-  { name: "canceled", value: 10, fill: "#E74C3C" },
-];
-
-// Calculate the outer radius for each segment based on its value
-const calculateOuterRadius = (value: number) => {
-  // Map value to a radius range (60-100)
-  return 60 + (value * 40) / 45; // 45 is max value
-};
-
-const chartConfig = {
-  orders: {
-    label: "Orders",
-  },
-  completed: {
-    label: "Completed",
-    color: "hsl(var(--chart-1))",
-  },
-  new: {
-    label: "New",
-    color: "hsl(var(--chart-2))",
-  },
-  inprogress: {
-    label: "Inprogress",
-    color: "hsl(var(--chart-3))",
-  },
-  canceled: {
-    label: "Canceled",
-    color: "hsl(var(--chart-4))",
-  },
-} satisfies ChartConfig;
+interface OrderDataEntry {
+  name: string;
+  label: string;
+  value: number;
+  fill: string;
+}
 
 export default function OrderStatistics() {
   const id = "pie-interactive";
+  const t = useTranslations("orderStatistics");
+
+  const [data, setData] = useState<OrderDataEntry[]>([
+    { name: "completed", label: t("completed"), value: 0, fill: "#27AE60" },
+    { name: "canceled", label: t("canceled"), value: 0, fill: "#E74C3C" },
+    { name: "inprogress", label: t("inprogress"), value: 0, fill: "#F39C12" },
+    { name: "new", label: t("new"), value: 0, fill: "#3498DB" },
+  ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await enjazService.getOrdersOverviewEmp();
+
+        if (!("error" in res)) {
+          setData([
+            {
+              name: "completed",
+              label: t("completed"),
+              value: res.data.completedorders ?? 0,
+              fill: "#27AE60",
+            },
+            {
+              name: "canceled",
+              label: t("canceled"),
+              value: res.data.cancelledorders ?? 0,
+              fill: "#E74C3C",
+            },
+            {
+              name: "inprogress",
+              label: t("inprogress"),
+              value: res.data.inprogressorders ?? 0,
+              fill: "#F39C12",
+            },
+            {
+              name: "new",
+              label: t("new"),
+              value: res.data.neworders ?? 0,
+              fill: "#3498DB",
+            },
+          ]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch orders overview:", error);
+      }
+    };
+
+    fetchData();
+  }, [t]);
 
   return (
     <Card
       data-chart={id}
-      className="w-full rounded-3xl bg-white p-0 border-none"
+      className="w-full h-full rounded-3xl bg-white p-0 border-none"
     >
-      <ChartStyle id={id} config={chartConfig} />
-      <CardContent className="flex flex-1 justify-center pb-0">
+      <ChartStyle id={id} config={{}} />
+      <CardContent className="p-4 flex flex-col md:flex-row flex-1 justify-center items-center">
         <ChartContainer
           id={id}
-          config={chartConfig}
-          className="mx-auto aspect-square w-full max-w-[300px]"
+          config={{}}
+          className="w-full h-full min-h-56 max-w-[300px]"
         >
           <PieChart>
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            {desktopData.map((entry, index) => (
+            {data.map((entry, index) => (
               <Pie
                 key={`pie-${index}`}
                 data={[entry]}
@@ -75,7 +99,7 @@ export default function OrderStatistics() {
                 startAngle={90 - index * 90}
                 endAngle={90 - (index + 1) * 90}
                 innerRadius={40}
-                outerRadius={calculateOuterRadius(entry.value)}
+                outerRadius={60 + (entry.value * 40) / 45}
                 paddingAngle={0}
                 dataKey="value"
                 stroke="none"
@@ -92,6 +116,19 @@ export default function OrderStatistics() {
             ))}
           </PieChart>
         </ChartContainer>
+
+        {/* Legend */}
+        <ul className="flex flex-col space-y-2 text-sm">
+          {data.map((item, index) => (
+            <li key={index} className="flex items-center">
+              <span
+                className="w-4 h-4 rounded-full mr-2"
+                style={{ backgroundColor: item.fill }}
+              ></span>
+              {item.label}
+            </li>
+          ))}
+        </ul>
       </CardContent>
     </Card>
   );

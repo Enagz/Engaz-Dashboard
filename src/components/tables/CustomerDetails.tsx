@@ -1,14 +1,25 @@
-import React, { useRef, useState } from "react";
+"use client";
+
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { ColDef, GridReadyEvent, AllCommunityModule } from "ag-grid-community";
+import {
+  ColDef,
+  GridReadyEvent,
+  IDatasource,
+  IGetRowsParams,
+  AllCommunityModule,
+} from "ag-grid-community";
 import { ModuleRegistry } from "ag-grid-community";
-import { Link } from 'react-router-dom';
+import { useTranslations, useLocale } from "next-intl";
+
 import { Icons } from "./Icons";
+import Link from "next/link";
+import { enjazService } from "@/services/enjazService";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 interface ClientData {
-  id: number;
+  id: number | string;
   name: string;
   email: string;
   phone: string;
@@ -19,44 +30,40 @@ interface ClientData {
   totalPayments: string;
 }
 
-// Custom cell renderer for client name and email
 const ClientCellRenderer = (props: any) => {
-  const { id, name } = props.data;
-
+  if (!props.data) return null;
+  const { name, email } = props.data;
   return (
-    <div dir="rtl" className="flex flex-col items-end">
-      {/* <div className="font-bold text-sm">{name}</div> */}
-      <Link to={`/customers/${id}`} className="font-bold text-sm hover:underline">
-        {name}
-      </Link>
-      <div className="text-gray-500 text-xs">{props.data.email}</div>
+    <div className="flex flex-col items-end" dir="rtl">
+      <div className="font-bold text-sm">{name}</div>
+      <div className="text-text-normal text-xs">{email}</div>
     </div>
   );
 };
 
-// Custom cell renderer for status
 const StatusCellRenderer = (props: any) => {
+  const t = useTranslations("customerDetailsTable");
   const status = props.value;
-  let color = "";
-  let background = "";
-  let text = "";
-  let icon = "•";
+  let color = "",
+    background = "",
+    text = "",
+    icon = "•";
 
   if (status === "active") {
-    color = "var(--color-green-color)";
-    background = "var(--color-green-hover)";
-    text = "نشط";
+    color = "var(--color-green-color, #28a745)";
+    background = "var(--color-green-hover, #e9f5ec)";
+    text = t("active");
   } else if (status === "inactive") {
-    color = "var(--color-red-color)";
-    background = "var(--color-red-hover)";
-    text = "غير نشط";
+    color = "var(--color-red-color, #dc3545)";
+    background = "var(--color-red-hover, #fdeaed)";
+    text = t("inactive");
   }
 
   return (
-    <div dir="rtl" className="flex h-full items-center justify-center">
+    <div className="flex h-full items-center justify-center" dir="rtl">
       <div
         className="font-bold flex items-center gap-1 px-2 py-3 h-0 rounded-full"
-        style={{ background, color: color }}
+        style={{ background, color }}
       >
         <span className="text-lg mr-1">{icon}</span>
         {text}
@@ -65,238 +72,207 @@ const StatusCellRenderer = (props: any) => {
   );
 };
 
-// Custom cell renderer for actions
-const ActionsCellRenderer = () => {
+const ActionsCellRenderer = (props: any) => {
+  if (!props.data) return null;
+  const { id } = props.data;
   return (
     <div className="h-full flex gap-2 justify-center items-center">
-      <button className="bg-none border-none cursor-pointer">
+      <Link
+        href={`/customers/${id}/remove`}
+        className="cursor-pointer p-1 hover:bg-gray-200 rounded"
+      >
         <Icons.trash />
-      </button>
-      <button className="bg-none border-none cursor-pointer">
+      </Link>
+      <a
+        href={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/dashboard/clients/download/${id}`}
+        className="cursor-pointer p-1 hover:bg-gray-200 rounded"
+      >
         <Icons.download />
-      </button>
-      <button className="bg-none border-none cursor-pointer">
+      </a>
+      <Link
+        href={`/customers/${id}/edit`}
+        className="cursor-pointer p-1 hover:bg-gray-200 rounded"
+      >
         <Icons.edit />
-      </button>
+      </Link>
     </div>
   );
 };
 
+const PAGINATION_PAGE_SIZE = 4;
+
 const CustomerDetails: React.FC = () => {
+  const t = useTranslations("customerDetailsTable");
+  const locale = useLocale() as "ar" | "en";
+
   const gridRef = useRef<AgGridReact>(null);
-  const [rowData] = useState<ClientData[]>([
-    {
-      id: 1,
-      name: "عبد الله القحطاني",
-      email: "abdallah2@email.com",
-      phone: "0501234567",
-      orderCount: "18 طلب",
-      status: "active",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 15, 2025",
-      totalPayments: "7,200 ر.س",
-    },
-    {
-      id: 2,
-      name: "فهد الدوسري",
-      email: "fahd.d3@email.com",
-      phone: "0559876543",
-      orderCount: "17 طلب",
-      status: "inactive",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 19, 2025",
-      totalPayments: "6,300 ر.س",
-    },
-    {
-      id: 3,
-      name: "نايف المطيري",
-      email: "naif.98@email.com",
-      phone: "0587654321",
-      orderCount: "12 طلب",
-      status: "active",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 13, 2025",
-      totalPayments: "2,100 ر.س",
-    },
-    {
-      id: 4,
-      name: "راكان الشمري",
-      email: "rakan.r@email.com",
-      phone: "0512345678",
-      orderCount: "15 طلب",
-      status: "inactive",
-      registrationDate: "Jul 13, 2023",
-      lastActivity: "Mar 20, 2025",
-      totalPayments: "1,200 ر.س",
-    },
-  ]);
 
   const [columnDefs] = useState<ColDef[]>([
     {
-      headerName: "اسم العميل",
+      headerName: t("customerName"),
       field: "name",
       cellRenderer: ClientCellRenderer,
-      minWidth: 150,
-      cellStyle: {
-        textAlign: "right",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "right",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
+      minWidth: 180,
+      cellStyle: { textAlign: "right" },
+      headerClass: "text-right",
     },
     {
-      headerName: "رقم الهاتف",
+      headerName: t("phoneNumber"),
       field: "phone",
-      minWidth: 120,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
+      minWidth: 150,
+      cellStyle: { textAlign: "center", color: "#555", fontSize: ".875rem" },
     },
     {
-      headerName: "عدد الطلبات",
+      headerName: t("orderCount"),
       field: "orderCount",
-      minWidth: 100,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
+      minWidth: 120,
+      cellStyle: { textAlign: "center", color: "#555", fontSize: ".875rem" },
     },
     {
-      headerName: "حالة العميل",
+      headerName: t("status"),
       field: "status",
-      minWidth: 100,
+      minWidth: 120,
       cellRenderer: StatusCellRenderer,
-      cellStyle: {
-        textAlign: "center",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
+      cellStyle: { textAlign: "center" },
     },
     {
-      headerName: "تاريخ التسجيل",
+      headerName: t("registrationDate"),
       field: "registrationDate",
-      minWidth: 130,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
+      minWidth: 150,
+      cellStyle: { textAlign: "center", color: "#555", fontSize: ".875rem" },
       sort: "desc",
     },
     {
-      headerName: "آخر نشاط",
+      headerName: t("lastActivity"),
       field: "lastActivity",
-      minWidth: 130,
-      cellStyle: {
-        textAlign: "center",
-        color: "var(--color-text-normal)",
-        fontSize: ".875rem",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
+      minWidth: 150,
+      cellStyle: { textAlign: "center", color: "#555", fontSize: ".875rem" },
     },
     {
-      headerName: "إجمالي المدفوعات",
+      headerName: t("totalPayments"),
       field: "totalPayments",
-      minWidth: 100,
+      minWidth: 150,
       cellStyle: {
         textAlign: "center",
-        color: "var(--color-primary-color, #0091FF)",
+        color: "#0091FF",
         fontWeight: "500",
         fontSize: ".875rem",
       },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
     },
     {
-      headerName: "الإجراءات",
+      headerName: t("actions"),
       field: "actions",
-      minWidth: 100,
+      minWidth: 120,
       cellRenderer: ActionsCellRenderer,
-      cellStyle: {
-        textAlign: "center",
-      },
-      headerStyle: {
-        backgroundColor: "var(--color-table-border)",
-        textAlign: "center",
-        fontSize: ".875rem",
-        fontWeight: 600,
-      },
+      cellStyle: { textAlign: "center" },
+      sortable: false,
+      filter: false,
     },
   ]);
 
-  const defaultColDef = {
-    sortable: true,
-    filter: true,
-    resizable: true,
-  };
+  const defaultColDef = useMemo(
+    () => ({
+      sortable: true,
+      filter: true,
+      resizable: true,
+      headerClass: "text-center",
+      headerStyle: {
+        backgroundColor: "#f0f0f0",
+        fontSize: ".875rem",
+        fontWeight: 600,
+      },
+    }),
+    []
+  );
+
+  const dataSource = useMemo(
+    (): IDatasource => ({
+      getRows: async (params: IGetRowsParams) => {
+        const pageToFetch =
+          Math.floor(params.startRow / PAGINATION_PAGE_SIZE) + 1;
+        try {
+          const response = await enjazService.getClients(pageToFetch);
+          const clients = response.data?.clients || [];
+          const totalPagesFromAPI = response.data?.totalPages || 0;
+
+          const mappedData: ClientData[] = clients.map((client: any) => ({
+            id: client.id,
+            name: client.name,
+            email: client.email,
+            phone: `${client.countrycode || ""}${client.phone || ""}`,
+            orderCount:
+              client.ordersCounter > 0
+                ? `${client.ordersCounter} ${t("orders")}`
+                : t("noOrders"),
+            status: client.isActive ? "active" : "inactive",
+            registrationDate: client.createdAt
+              ? new Date(client.createdAt).toLocaleDateString(
+                  locale === "ar" ? "ar-SA" : "en-US",
+                  {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  }
+                )
+              : t("notAvailable"),
+            lastActivity: client.lastOrder
+              ? new Date(client.lastOrder).toLocaleDateString(
+                  locale === "ar" ? "ar-SA" : "en-US"
+                )
+              : t("noActivity"),
+            totalPayments:
+              client.totalRevenue > 0
+                ? `${client.totalRevenue.toLocaleString()} ${t("sar")}`
+                : t("noPayments"),
+          }));
+
+          const lastRow =
+            totalPagesFromAPI > 0
+              ? pageToFetch >= totalPagesFromAPI
+                ? (totalPagesFromAPI - 1) * PAGINATION_PAGE_SIZE +
+                  mappedData.length
+                : totalPagesFromAPI * PAGINATION_PAGE_SIZE
+              : mappedData.length === 0 && pageToFetch === 1
+              ? 0
+              : -1;
+
+          params.successCallback(mappedData, lastRow);
+        } catch (err) {
+          console.error("AG Grid: Failed to load client data", err);
+          params.failCallback();
+        }
+      },
+    }),
+    [locale, t]
+  );
 
   const onGridReady = (params: GridReadyEvent) => {
-    params.api.sizeColumnsToFit();
+    // Optional: auto-sizing logic
   };
 
   return (
-    <div className="flex flex-col">      
-    
-      <div className="flex items-center justify-between" style={{ backgroundColor: 'white', padding: '10px', borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}> {/* إضافة نمط الخلفية */}
-        <h2 className="text-xl font-bold text-[#333]">كل العملاء</h2>
-        <Sliders size={24} color="#888" />
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between bg-white px-4 py-2 rounded-t border-b border-gray-200">
+        <h2 className="text-xl font-bold text-[#333]">{t("allCustomers")}</h2>
       </div>
-
       <div
         className="ag-theme-alpine"
-        style={{
-          height: "auto",
-          width: "100%",
-        }}
+        style={{ height: "300px", width: "100%" }}
       >
         <AgGridReact
           ref={gridRef}
-          rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           onGridReady={onGridReady}
-          rowSelection={{ mode: "multiRow", groupSelects: "descendants" }}
-          paginationAutoPageSize={true}
+          rowModelType="infinite"
+          datasource={dataSource}
           pagination={true}
-          domLayout="autoHeight"
+          paginationPageSize={PAGINATION_PAGE_SIZE}
+          cacheBlockSize={PAGINATION_PAGE_SIZE}
+          infiniteInitialRowCount={PAGINATION_PAGE_SIZE}
+          rowSelection="multiple"
           headerHeight={50}
+          enableRtl={locale === "ar"}
         />
       </div>
     </div>
