@@ -19,7 +19,7 @@ interface RowData {
   date: string;
   employee: string;
 }
-
+//
 const StatusCellRenderer = (props: any) => {
   const status = props.value;
   const t = useTranslations("latestOrders.statusText");
