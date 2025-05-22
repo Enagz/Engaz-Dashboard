@@ -1,9 +1,8 @@
 "use client";
 
 import { LogOut } from "lucide-react";
-import Link from "next/link";
 import socket from "@/lib/socket";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 
 const MainSidebar = () => {
